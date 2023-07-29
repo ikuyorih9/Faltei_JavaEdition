@@ -2,6 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="inicio">#2D3856</color>
+    <color name="inicio">#2d3856</color>
     <color name="titulo">#9f55a0</color>
+    <color name="home">#fff7e4</color>
+
+    <color name="primario">#2d3856</color>
+    <color name="primarioVariante">#554991</color>
+    <color name="secundario">#9f55a0</color>
 </resources>
