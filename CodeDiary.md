@@ -19,3 +19,13 @@ Por fim, *eu não sou bom em design*, por isso a **Home** ficou bem defeituosa. 
 <p align="center">
     <img width = 400 src="diaryImages/29.07.23 - home.png">
 </p>
+
+## 31 de julho de 2023: tentativa de criar uma Lateral Toolbar.
+
+Hoje eu tentei criar uma barra de ferramentas lateral. Eu copiei um outro exemplo, onde ele usa **navigators** e **fragments**. Os fragmentos são fáceis de entender, visto que eles são literalmente fragmentos da tela, onde você junta num layout só. Os navegadores, eu copiei o código, esperando entender. 
+
+O problema da vez foi que, copiando o código do exemplo, o meu layout não disponibiliza o botão de abrir a barra lateral, ele troca pelo botão de voltar (navigate up). Eu entendi que o código não consegue entender que existe um top-level destionation. Não sei como resolver e vou deixar isso pra outro dia.
+
+<p align="center">
+    <img width=180 src="diaryImages/31.07.23 - problema na navegacao.png">
+</p>

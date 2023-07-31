@@ -5,7 +5,8 @@
         <item name="colorPrimaryVariant">@color/primarioVariante</item>
         <item name="colorSecondary">@color/secundario</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.Faltei" parent="Base.Theme.Faltei" />
@@ -19,4 +20,7 @@
         <item name="android:background">@color/secundario</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="Theme.AppCompat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.Faltei.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

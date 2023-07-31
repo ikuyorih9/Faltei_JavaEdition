@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grafico_navegacao"
+    app:startDestination="@+id/HomeFragment1">
+
+    <fragment
+        android:id="@+id/HomeFragment1"
+        android:name="com.example.faltei.FragmentHome"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/DisciplinaFragment2"
+        android:name="com.example.faltei.FragmentDisciplina"
+        android:label="Disciplina"
+        tools:layout="@layout/fragment_disciplina">
+    </fragment>
+
+</navigation>
