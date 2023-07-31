@@ -20,12 +20,18 @@ Por fim, *eu não sou bom em design*, por isso a **Home** ficou bem defeituosa. 
     <img width = 400 src="diaryImages/29.07.23 - home.png">
 </p>
 
-## 31 de julho de 2023: tentativa de criar uma Lateral Toolbar.
+## 31 de julho de 2023: tentativa de criar um menu lateral.
 
-Hoje eu tentei criar uma barra de ferramentas lateral. Eu copiei um outro exemplo, onde ele usa **navigators** e **fragments**. Os fragmentos são fáceis de entender, visto que eles são literalmente fragmentos da tela, onde você junta num layout só. Os navegadores, eu copiei o código, esperando entender. 
+Hoje eu tentei criar um menu lateral. Eu copiei um outro exemplo, onde ele usa **navigators** e **fragments**. Os fragmentos são fáceis de entender, visto que eles são literalmente fragmentos da tela, onde você junta num layout só. Os navegadores, eu copiei o código, esperando entender. 
 
-O problema da vez foi que, copiando o código do exemplo, o meu layout não disponibiliza o botão de abrir a barra lateral, ele troca pelo botão de voltar (navigate up). Eu entendi que o código não consegue entender que existe um top-level destionation. Não sei como resolver e vou deixar isso pra outro dia.
+O problema da vez foi que, copiando o código do exemplo, o meu layout não disponibiliza o botão de abrir a barra lateral, ele troca pelo botão de voltar (navigate up). Eu entendi que o código não consegue entender que existe um top-level destionation.
+
+Felizmente, depois de desistir, eu fiquei pensando no caminho lógico do código para carregar um fragmento. No exemplo do Android Studio, ao clicar em um tópico "Gallery" do menu lateral, o fragmento mostrado na tela era trocado por ele. Mas como o código sabe que, ao clicar em "Gallery", ele deve abrir o fragmento do "Gallery"?
+
+ Isso fez eu vasculhar os códigos do *Faltei* que envolvem o menu lateral e os fragmentos de destino. Descobri que o XML do menu lateral e o XML do gráfico de navegação estavam com IDs diferentes. O código não estava entendendo que havia uma navegação a se seguir, então ele apenas colocava o símbolo de voltar.
 
 <p align="center">
-    <img width=180 src="diaryImages/31.07.23 - problema na navegacao.png">
+    <img width=150 src="diaryImages/31.07.23 - problema na navegacao.png">
+    <img width=150 src="diaryImages/31.07.23 - navegacao concluida.png">
+    <img width=150 src="diaryImages/31.07.23 - menu lateral.png">
 </p>

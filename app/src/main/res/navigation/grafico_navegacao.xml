@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/grafico_navegacao"
-    app:startDestination="@+id/HomeFragment1">
+    app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/HomeFragment1"
+        android:id="@+id/nav_home"
         android:name="com.example.faltei.FragmentHome"
         android:label="Home"
         tools:layout="@layout/fragment_home">
     </fragment>
 
     <fragment
-        android:id="@+id/DisciplinaFragment2"
+        android:id="@+id/nav_add"
         android:name="com.example.faltei.FragmentDisciplina"
         android:label="Disciplina"
         tools:layout="@layout/fragment_disciplina">
