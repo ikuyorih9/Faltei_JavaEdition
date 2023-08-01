@@ -1,6 +1,10 @@
 # Diário de programação!
 
-**Por: Hugo Hiroyuki Nakamura.**
+**Por:** *Hugo Hiroyuki Nakamura.*
+
+**Criado em:** *29 de julho de 2023.*
+
+**Finalizado em:** *ainda em desenvolvimento.*
 
     Diário de criação do aplicativo "Faltei!". Todas (ou a maioria) das mudanças serão relatadas no diário.
 ---
@@ -35,3 +39,18 @@ Felizmente, depois de desistir, eu fiquei pensando no caminho lógico do código
     <img width=150 src="diaryImages/31.07.23 - navegacao concluida.png">
     <img width=150 src="diaryImages/31.07.23 - menu lateral.png">
 </p>
+
+## 1 de agosto de 2023: criação da tela de adicionar disciplina.
+
+Hoje eu fiz um grande progresso: aprendi como navegar entre fragmentos. O único problema disso é que, talvez, uma abordagem melhor fosse criar Activities, em vez de trocar os fragmentos.
+
+O que importa é que hoje eu finalmente criei uma tela sozinho: a tela de adicionar disciplinas.
+
+<p align = "center">
+    <img width=200 src="diaryImages/01.08.23 - tela de disciplinas.png">
+    <img width=200 src="diaryImages/01.08.23 - tela de adicionar disciplina.png">
+</p>
+
+Basicamente, quando você clica no menu lateral em "Disciplinas", entra-se na tela da imagem à esquerda. Ao clicar em "+", entra-se na tela da imagem à direita, onde você pode inserir o nome da disciplina, o professor e uma cor.
+
+Agora, é preciso descobrir como passar do "Adicionar Disciplina" para o "Disciplinas".

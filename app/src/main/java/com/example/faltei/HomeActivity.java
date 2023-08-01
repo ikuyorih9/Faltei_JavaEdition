@@ -15,8 +15,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
@@ -26,19 +29,23 @@ import com.google.android.material.navigation.NavigationView;
 public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration configuracaoToolbar;
     private ActivityHomeBinding binding;
+
+    private Button b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //Desativa o modo escuro.
+        binding = ActivityHomeBinding.inflate(getLayoutInflater()); //Cria um objeto de vinculação.
+        setContentView(binding.getRoot()); //Obtém a visualização e a ativa na tela.
+        setSupportActionBar((Toolbar)findViewById(R.id.toolbar)); //Configura a barra de ferramentas.
+        //setSupportActionBar(binding.appBarHome.toolbar); //Configura a barra de ferramentas.
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        setSupportActionBar(binding.appBarHome.toolbar);
+        DrawerLayout drawer = binding.drawerLayout; //Cria um layout Drawer, que permite a sobreposição do menu lateral.
+        NavigationView navigationView = binding.navView; //Cria um menu de navegação padrão (menu lateral).
+        configuracaoToolbar = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_disciplinas, R.id.nav_faltas).setOpenableLayout(drawer).build();
 
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        configuracaoToolbar = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_add).setOpenableLayout(drawer).build();
-
+        //Gerencia a navegação do aplicativo.
+        // Navigation flows and destinations are determined by the navigation graph owned by the controller
         NavController navController = Navigation.findNavController(this, R.id.nav_contentMain);
         NavigationUI.setupActionBarWithNavController(this, navController, configuracaoToolbar);
         NavigationUI.setupWithNavController(navigationView, navController);
