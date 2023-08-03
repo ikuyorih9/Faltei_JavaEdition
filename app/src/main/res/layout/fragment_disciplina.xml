@@ -17,31 +17,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:orientation="vertical"
-            android:visibility="visible">
-
-            <LinearLayout
-                style="@style/DisciplinaBanner"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="monospace"
-                    android:gravity="center"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textColor="@color/home"
-                    android:textSize="36sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/DisciplinaBanner"
-                android:orientation="horizontal" />
-
-        </LinearLayout>
+            android:visibility="visible"/>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

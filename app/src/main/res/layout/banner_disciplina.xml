@@ -6,23 +6,39 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/layout_banner"
         style="@style/DisciplinaBanner"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtView_nomeDisciplina"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="monospace"
             android:gravity="center"
-            android:text="TextView"
+            android:text="DISCIPLINA"
             android:textAlignment="center"
             android:textColor="@color/home"
             android:textSize="36sp" />
+        <TextView
+            android:id="@+id/txtView_nomeProfessor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="professor"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
