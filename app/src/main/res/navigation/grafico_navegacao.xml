@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grafico_navegacao"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.faltei.FragmentHome"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_disciplinas"
+        android:name="com.example.faltei.FragmentDisciplina"
+        android:label="Disciplina"
+        tools:layout="@layout/fragment_disciplina">
+
+        <action
+            android:id="@+id/action_addDisciplina"
+            app:destination="@id/nav_addDisciplina"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_faltas"
+        android:name="com.example.faltei.FragmentFaltas"
+        android:label="Faltas"
+        tools:layout="@layout/fragment_faltas">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_addDisciplina"
+        android:name="com.example.faltei.FragmentAdicionarDisciplina"
+        android:label="Adicionar Disciplina"
+        tools:layout="@layout/fragment_adicionar_disciplina">
+        <action
+            android:id="@+id/action_voltarDisciplinas"
+            app:destination="@id/nav_disciplinas"/>
+    </fragment>
+
+</navigation>

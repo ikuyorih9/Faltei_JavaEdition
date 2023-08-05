@@ -9,4 +9,12 @@
     <color name="primario">#2d3856</color>
     <color name="primarioVariante">#554991</color>
     <color name="secundario">#9f55a0</color>
+
+    <color name="darkRed">#7A0000</color>
+    <color name="orange">#EC6600</color>
+    <color name="darkBlue">#00027A</color>
+    <color name="yellow">#FFB700</color>
+    <color name="darkGreen">#104C00</color>
+    <color name="purple">#44004C</color>
+    <color name="gray">#54000000</color>
 </resources>

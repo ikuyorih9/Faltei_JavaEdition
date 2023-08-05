@@ -5,7 +5,8 @@
         <item name="colorPrimaryVariant">@color/primarioVariante</item>
         <item name="colorSecondary">@color/secundario</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="Theme.Faltei" parent="Base.Theme.Faltei" />
@@ -19,4 +20,28 @@
         <item name="android:background">@color/secundario</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    
+    <style name="DisciplinaBanner">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:background">@color/primarioVariante</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
+    <style name="coresDisciplina">
+        <item name="android:layout_width"> 50dp </item>
+        <item name="android:layout_height"> 50dp </item>
+        <item name="android:clickable">true</item>
+
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="Theme.AppCompat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.Faltei.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
