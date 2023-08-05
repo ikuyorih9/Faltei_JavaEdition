@@ -1,9 +1,12 @@
 package com.example.faltei;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,5 +63,18 @@ public class FragmentFaltas extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_faltas, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if(sharedPref.contains("quantidadeDisciplinas") == false){
+            Log.d("HomeActivity", "INFORMAÇÃO NÃO ENCONTRADA!");
+        }
+        else{
+            Log.d("HomeActivity", "INFORMAÇÃO ENCONTRADA!");
+        }
+        Log.d("HomeActivity", "Disciplinas: " + sharedPref.getInt("quantidadeDisciplinas",-1));
     }
 }

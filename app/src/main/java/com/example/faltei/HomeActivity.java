@@ -7,6 +7,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
@@ -26,14 +28,23 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.faltei.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration configuracaoToolbar;
     private ActivityHomeBinding binding;
 
     private Button b;
+
+    public static ArrayList<Disciplina> disciplinasSalvas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("HomeActivity", "onCreate");
+        carregarDisciplinas();
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //Desativa o modo escuro.
         binding = ActivityHomeBinding.inflate(getLayoutInflater()); //Cria um objeto de vinculação.
         setContentView(binding.getRoot()); //Obtém a visualização e a ativa na tela.
@@ -61,5 +72,76 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_contentMain);
         return NavigationUI.navigateUp(navController, configuracaoToolbar) || super.onSupportNavigateUp();
+    }
+
+
+    public void salvarDisciplinas(){
+        Log.d("HomeActivity", "Salvando disciplinas!");
+        if(disciplinasSalvas == null)
+            return;
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        int size = disciplinasSalvas.size();
+        editor.putInt("quantidadeDisciplinas", size);
+        Log.d("HomeActivity", "Quantidade de disciplinas: " + size);
+
+        for(int i = 0; i < size; i++){
+            Disciplina disciplina = disciplinasSalvas.get(i);
+            String nomeDisciplina = disciplina.getNomeDisciplina();
+            String nomeProfessor = disciplina.getNomeProfessor();
+            int cor = disciplina.getCorEscolhida();
+
+            editor.putString("nomeDisciplina " + i, nomeDisciplina);
+            editor.putString("nomeProfessor " + i, nomeProfessor);
+            editor.putInt("corDisciplina " + i, cor);
+            editor.apply();
+
+            Log.d("HomeActivity", "Disciplina " + nomeDisciplina + " salva!");
+        }
+    }
+
+    public void carregarDisciplinas(){
+        Log.d("HomeActivity", "Recuperando disciplinas...");
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        int quantidadeDisciplinas = sharedPref.getInt("quantidadeDisciplinas", -1);
+
+        Log.d("HomeActivity", "Quantidade de disciplinas: " + quantidadeDisciplinas);
+
+        if(quantidadeDisciplinas <= 0)
+            return;
+
+        if(disciplinasSalvas == null)
+            disciplinasSalvas = new ArrayList<Disciplina>();
+        else
+            disciplinasSalvas.clear();
+
+        for(int i = 0; i < quantidadeDisciplinas; i++){
+            Log.d("HomeActivity", "Carregando disciplina " + i);
+            String nomeDisciplina = sharedPref.getString("nomeDisciplina " + i, "Disciplina -");
+            String nomeProfessor = sharedPref.getString("nomeProfessor " + i, "Professor -");
+            int cor = sharedPref.getInt("corDisciplina " + i, -1);
+
+            Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor);
+            disciplinasSalvas.add(disciplina);
+        }
+
+
+    }
+
+    public void apagarDisciplina(Disciplina disciplina){
+        int iDisciplina = disciplinasSalvas.indexOf(disciplina);
+        Log.d("HomeActivity", "APAGAR DISCIPLINA!");
+        Log.d("HomeActivity", "Apagar a disciplina: " + iDisciplina);
+
+        if(iDisciplina == -1)
+            return;
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        sharedPref.edit().remove("nomeDisciplina " + iDisciplina);
+
+        disciplinasSalvas.remove(iDisciplina);
     }
 }

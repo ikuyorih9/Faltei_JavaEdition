@@ -121,3 +121,87 @@ que carrega o banner do layout template e pode-se aplicar ele no layout atual.
 <p align = "center">
     <img width=200 src="diaryImages/03.08.23 - banner disciplina.png">
 </p>
+
+## 5 de agosto de 2023: finalização da tela de disciplinas.
+
+A comunicação dos fragmentos, como abordado no último relato, foi abandonado. É preciso ter uma lista de todas as disciplinas salvas no aplicativo, para que outros fragmentos/atividades possam usar. Além disso, comunicar uma disciplina para outro fragmento era uma abordagem bem deselegante, é muito melhor deixar uma lista centralizada.
+
+Dessa forma, na tela de adicionar disciplinas, o botão de adicionar apenas colocava a disciplina na lista.
+
+Com uma lista de disciplinas centralizada, era preciso encontrar uma maneira de salvá-las na memória. Logo, foi utilizado o "SharedPreferences", responsável por salvar um binário (chave, objeto) na pasta principal do aplicativo. 
+
+Na atividade principal, onde se situa a lista, a função "salvarDisciplinas" surge para salvar a lista inteira na memória. Observe que as disciplinas estão sendo salvas com as chaves "nomeDisciplina i", "nomeProfessor i", "corDisciplina i", onde i é a posição dela na lista.
+
+```
+public void salvarDisciplinas(){
+    SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
+
+    int size = disciplinasSalvas.size();
+    editor.putInt("quantidadeDisciplinas", size);
+
+    for(int i = 0; i < size; i++){
+        Disciplina disciplina = disciplinasSalvas.get(i);
+        String nomeDisciplina = disciplina.getNomeDisciplina();
+        String nomeProfessor = disciplina.getNomeProfessor();
+        int cor = disciplina.getCorEscolhida();
+
+        editor.putString("nomeDisciplina " + i, nomeDisciplina);
+        editor.putString("nomeProfessor " + i, nomeProfessor);
+        editor.putInt("corDisciplina " + i, cor);
+        editor.apply();
+    }
+}
+```
+
+Da mesma forma, a função "carregarDisciplinas" recupera as disciplinas salvas e as põe de volta na lista.
+
+```
+public void carregarDisciplinas(){
+    SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+    int quantidadeDisciplinas = sharedPref.getInt("quantidadeDisciplinas", -1);
+
+    for(int i = 0; i < quantidadeDisciplinas; i++){
+        String nomeDisciplina = sharedPref.getString("nomeDisciplina " + i, "Disciplina -");
+        String nomeProfessor = sharedPref.getString("nomeProfessor " + i, "Professor -");
+        int cor = sharedPref.getInt("corDisciplina " + i, -1);
+
+        Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor);
+        disciplinasSalvas.add(disciplina);
+    }
+}
+```
+
+Também, a função "apagarDisciplina" permite que uma disciplina seja deletada da lista e da memória.
+
+```
+public void apagarDisciplina(Disciplina disciplina){
+    int iDisciplina = disciplinasSalvas.indexOf(disciplina);
+
+    SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+    sharedPref.edit().remove("nomeDisciplina " + iDisciplina);
+
+    disciplinasSalvas.remove(iDisciplina);
+}
+```
+
+Toda vez que uma disciplina é adicionada, modificada ou apagada, a lista e a memória precisam ser atualizadas. Portanto, a função "salvarDisciplina" é requisitada várias vezes.
+
+Por fim, uma opção de modificação da disciplina foi adicionada. Quando se clica na disciplina, a tela de adicionar abre novamente, mas com os botões atualizados.
+
+<p align="center">
+    <img width=200 src="diaryImages/05.08.23 - tela de edicao.png">
+</p>
+
+Para saber qual a disciplina selecionada para se modificar, deu para reutilizar a comunicação por "fragmentResult". Logo, antes de navegar a outra tela, tem-se o código abaixo.
+
+```
+Bundle bundleBannerDisciplina = new Bundle();
+
+bundleBannerDisciplina.putSerializable("bundleBannerDisciplina", disciplina);
+
+getParentFragmentManager().setFragmentResult("bundleDisciplina", bundleBannerDisciplina);
+```
+
+Há um erro a se corrigir ainda: ao desligar a tela do celular e ligá-la novamente, a tela de disciplinas duplica a lista. Isso acontece porque na função "onResume", ocorre a adição dos banners da lista, sem reconhecer os que já estão na tela.

@@ -1,5 +1,7 @@
 package com.example.faltei;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -26,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -33,19 +36,32 @@ public class FragmentDisciplina extends Fragment {
 
     private FragmentDisciplinaBinding binding;
     private LinearLayout suporteLinLay;
-    private DisciplinaViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                FragmentAdicionarDisciplina.Disciplina disciplina = ((FragmentAdicionarDisciplina.Disciplina) result.getSerializable("infoKey"));
-                criaBannerDisciplina(disciplina);
+                Disciplina disciplina = ((Disciplina) result.getSerializable("infoKey"));
+                if(HomeActivity.disciplinasSalvas == null){
+                    Log.d("HomeActivity", "Não há disciplinas!");
+                    HomeActivity.disciplinasSalvas = new ArrayList<Disciplina>();
+                }
+                if(HomeActivity.disciplinasSalvas!=null)
+                    HomeActivity.disciplinasSalvas.add(disciplina);
 
+                ((HomeActivity) getActivity()).salvarDisciplinas();
             }
         });
+        */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        displayBanners();
     }
 
     @Override
@@ -62,11 +78,10 @@ public class FragmentDisciplina extends Fragment {
             }
         });
 
-
         return binding.getRoot();
     }
 
-    protected void criaBannerDisciplina(FragmentAdicionarDisciplina.Disciplina disciplina){
+    protected void criaBannerDisciplina(@NonNull Disciplina disciplina){
         String nomeDisciplina = disciplina.getNomeDisciplina();
         String nomeProfessor = disciplina.getNomeProfessor();
         int corEscolhida = disciplina.getCorEscolhida();
@@ -76,6 +91,22 @@ public class FragmentDisciplina extends Fragment {
 
         View banner = getLayoutInflater().inflate(R.layout.banner_disciplina, null, false);
         LinearLayout bannerDisciplina = banner.findViewById(R.id.layout_banner);
+
+        bannerDisciplina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundleBannerDisciplina = new Bundle();
+                bundleBannerDisciplina.putSerializable("bundleBannerDisciplina", disciplina);
+                getParentFragmentManager().setFragmentResult("bundleDisciplina", bundleBannerDisciplina);
+
+                NavHostFragment navHostFragment = (NavHostFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_contentMain);
+                NavController navControl= navHostFragment.getNavController();
+                navControl.navigate(R.id.action_addDisciplina);
+            }
+        });
+
         bannerDisciplina.setBackgroundColor(corEscolhida);
         TextView txtView_disciplina = bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina);
         txtView_disciplina.setText(nomeDisciplina);
@@ -85,8 +116,10 @@ public class FragmentDisciplina extends Fragment {
 
     }
 
-    public void setData(String dataReceived){
-        String data = dataReceived;
-        Log.d("HomeActivity", "DATA: " + data);
+    private void displayBanners(){
+        if(HomeActivity.disciplinasSalvas != null)
+            for(int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++){
+                criaBannerDisciplina(HomeActivity.disciplinasSalvas.get(i));
+            }
     }
 }
