@@ -205,3 +205,22 @@ getParentFragmentManager().setFragmentResult("bundleDisciplina", bundleBannerDis
 ```
 
 Há um erro a se corrigir ainda: ao desligar a tela do celular e ligá-la novamente, a tela de disciplinas duplica a lista. Isso acontece porque na função "onResume", ocorre a adição dos banners da lista, sem reconhecer os que já estão na tela.
+
+## 6 de agosto de 2023: piecharts e gestão de faltas.
+
+No último dia estive trabalhando numa forma de inserir gráficos no aplicativo. Para isso, eu descobri o MPAndroidChart, uma biblioteca que disponibiliza vários tipos de gráficos. A instalação é simples, basta abrir o build.gradle(app) e o settings.gradle() e adicionar as linhas
+
+```
+repositories {
+    maven { url "https://jitpack.io" }
+}
+dependencies {
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+}
+```
+
+Com os gráficos adicionados, foi possível criar as telas de estatística de faltas e a tela de adicionar. A tela de estatísticas mostra um gráfico geral sobre todas as faltas, dentre as aulas, além dos banners das disciplinas, mostrando o quanto de falta você tem em mini piecharts. Há um botão flutuante que leva a outra tela para adicionar uma falta.
+
+O que eu descobri nesses dois dias foi a utilizar Spinners, ListViews e charts. Como não são mudanças muito significativas (apenas manipulação de layouts) não tem muito o que escrever.
+
+O próximo passo é mudar o design da Home. Planejo colocar um outro piechart, junto a uma série banners ordenados do estado mais emergencial de faltas ao mais tranquilo. A ideia é entrar na Home e já entender sua situação sobre o controle de faltas. Mas, para isso, preciso descobrir como trabalhar com percentuais, pois está acontecendo um erro ao escrever as porcentagens nos logs.
