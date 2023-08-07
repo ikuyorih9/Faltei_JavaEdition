@@ -28,13 +28,19 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.faltei.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
     private AppBarConfiguration configuracaoToolbar;
     private ActivityHomeBinding binding;
 
     private Button b;
+
+    public static double mediaFaltas = 0.7;
 
     public static ArrayList<Disciplina> disciplinasSalvas;
 
@@ -84,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int size = disciplinasSalvas.size();
-        editor.putInt("quantidadeDisciplinas", size);
+        editor.putInt(getString(R.string.qtdDisciplinasKey), size);
         Log.d("HomeActivity", "Quantidade de disciplinas: " + size);
 
         for(int i = 0; i < size; i++){
@@ -92,10 +98,22 @@ public class HomeActivity extends AppCompatActivity {
             String nomeDisciplina = disciplina.getNomeDisciplina();
             String nomeProfessor = disciplina.getNomeProfessor();
             int cor = disciplina.getCorEscolhida();
+            int qtdAulas = disciplina.getQuantidadeAulas();
+            int qtdFaltas = disciplina.getQuantidadeFaltas();
 
-            editor.putString("nomeDisciplina " + i, nomeDisciplina);
-            editor.putString("nomeProfessor " + i, nomeProfessor);
-            editor.putInt("corDisciplina " + i, cor);
+            editor.putString(getString(R.string.nomeDisciplinaKey) + i, nomeDisciplina);
+            editor.putString(getString(R.string.nomeProfessorKey) + i, nomeProfessor);
+            editor.putInt(getString(R.string.corDisciplinaKey) + i, cor);
+            editor.putInt(getString(R.string.qtdAulasKey) + i, qtdAulas);
+
+            editor.putInt(getString(R.string.qtdFaltasKey) + i, qtdFaltas);
+            for(int j = 0; j < qtdFaltas; j++){
+                Date date = disciplina.getFalta(j);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String dateString = dateFormat.format(date);
+                String prefixo = getString(R.string.nomeDisciplinaKey) + i;
+                editor.putString(prefixo + getString(R.string.idFalta) + j, dateString);
+            }
             editor.apply();
 
             Log.d("HomeActivity", "Disciplina " + nomeDisciplina + " salva!");
@@ -106,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d("HomeActivity", "Recuperando disciplinas...");
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
 
-        int quantidadeDisciplinas = sharedPref.getInt("quantidadeDisciplinas", -1);
+        int quantidadeDisciplinas = sharedPref.getInt(getString(R.string.qtdDisciplinasKey), -1);
 
         Log.d("HomeActivity", "Quantidade de disciplinas: " + quantidadeDisciplinas);
 
@@ -120,15 +138,31 @@ public class HomeActivity extends AppCompatActivity {
 
         for(int i = 0; i < quantidadeDisciplinas; i++){
             Log.d("HomeActivity", "Carregando disciplina " + i);
-            String nomeDisciplina = sharedPref.getString("nomeDisciplina " + i, "Disciplina -");
-            String nomeProfessor = sharedPref.getString("nomeProfessor " + i, "Professor -");
-            int cor = sharedPref.getInt("corDisciplina " + i, -1);
+            String nomeDisciplina = sharedPref.getString(getString(R.string.nomeDisciplinaKey) + i, "Disciplina -");
+            String nomeProfessor = sharedPref.getString(getString(R.string.nomeProfessorKey) + i, "Professor -");
+            int cor = sharedPref.getInt(getString(R.string.corDisciplinaKey) + i, -1);
+            int qtdAulas = sharedPref.getInt(getString(R.string.qtdAulasKey) + i, -1);
 
-            Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor);
+            Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, qtdAulas);
+
+            int qtdFaltas = sharedPref.getInt(getString(R.string.qtdFaltasKey) + i, 0);
+            for(int j = 0; j < qtdFaltas; j++){
+                String key = getString(R.string.nomeDisciplinaKey) + i + getString(R.string.idFalta) + j;
+                String dateString = sharedPref.getString(key, "dd/MM/yyyy");
+                if(dateString != null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    try {
+                        Date date = dateFormat.parse(dateString);
+                        disciplina.adicionarFalta(date);
+                    }
+                    catch (ParseException e){
+                        Log.e("HomeActivity", e.getMessage());
+                    }
+
+                }
+            }
             disciplinasSalvas.add(disciplina);
         }
-
-
     }
 
     public void apagarDisciplina(Disciplina disciplina){
@@ -140,8 +174,23 @@ public class HomeActivity extends AppCompatActivity {
             return;
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        sharedPref.edit().remove("nomeDisciplina " + iDisciplina);
+        sharedPref.edit().remove(getString(R.string.nomeDisciplinaKey) + iDisciplina);
+        sharedPref.edit().remove(getString(R.string.nomeProfessorKey) + iDisciplina);
+        sharedPref.edit().remove(getString(R.string.corDisciplinaKey) + iDisciplina);
+        sharedPref.edit().remove(getString(R.string.qtdAulasKey) + iDisciplina);
+
+        int qtdFaltas = disciplina.getQuantidadeFaltas();
+        for(int i = 0; i < qtdFaltas; i++){
+            String prefixo = getString(R.string.nomeDisciplinaKey) + iDisciplina + getString(R.string.idFalta) + i;
+            sharedPref.edit().remove(prefixo);
+            disciplina.removerFalta(0);
+        }
+        sharedPref.edit().remove(getString(R.string.qtdFaltasKey) + iDisciplina);
 
         disciplinasSalvas.remove(iDisciplina);
+        int quantidadeDisciplinas = disciplinasSalvas.size();
+        sharedPref.edit().remove(getString(R.string.qtdDisciplinasKey));
+        sharedPref.edit().putInt(getString(R.string.qtdDisciplinasKey), quantidadeDisciplinas);
+        sharedPref.edit().commit();
     }
 }

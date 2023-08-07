@@ -42,6 +42,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
     private Button bApagar;
     private EditText etNomeDisciplina;
     private EditText etProfessor;
+    private EditText etQtdAulas;
     private ArrayList <ImageView> cores;
     private LinearLayout amostraCor;
     private LinearLayout botoesAlternativos;
@@ -61,6 +62,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
 
         etNomeDisciplina = binding.editTextNomeDisciplina;
         etProfessor = binding.editTextProfessor;
+        etQtdAulas = binding.editTextQtdAulas;
 
         amostraCor = binding.layAmostraCor;
         botoesAlternativos = binding.layoutBotoesAlternativos;
@@ -71,6 +73,8 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 Disciplina disciplinaRecebida = ((Disciplina) result.getSerializable("bundleBannerDisciplina"));
                 etNomeDisciplina.setText(disciplinaRecebida.getNomeDisciplina());
                 etProfessor.setText(disciplinaRecebida.getNomeProfessor());
+                etQtdAulas.setText("" + disciplinaRecebida.getQuantidadeAulas());
+
                 corEscolhida = disciplinaRecebida.getCorEscolhida();
                 amostraCor.setBackgroundColor(corEscolhida);
 
@@ -126,6 +130,13 @@ public class FragmentAdicionarDisciplina extends Fragment {
                     return;
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
+
+                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
+                if(etQtdAulas.getText().toString().isEmpty()){
+                    Snackbar.make(view, "Insira a quantidade de aulas.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+                disciplina.setQuantidadeAulas(qtdAulas);
 
                 disciplina.setCorEscolhida(corEscolhida);
                 if(disciplina.getCorEscolhida() == -1){
@@ -207,6 +218,13 @@ public class FragmentAdicionarDisciplina extends Fragment {
                     return;
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
+
+                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
+                if(etQtdAulas.getText().toString().isEmpty()){
+                    Snackbar.make(view, "Insira a quantidade de aulas.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+                disciplina.setQuantidadeAulas(qtdAulas);
 
                 if(disciplina.getCorEscolhida() == -1){
                     Snackbar.make(view, "Escolha uma cor para a disciplina.", Snackbar.LENGTH_LONG).setAction("Action", null).show();

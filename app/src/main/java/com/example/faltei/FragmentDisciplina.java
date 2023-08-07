@@ -38,29 +38,9 @@ public class FragmentDisciplina extends Fragment {
     private LinearLayout suporteLinLay;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*
-        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                Disciplina disciplina = ((Disciplina) result.getSerializable("infoKey"));
-                if(HomeActivity.disciplinasSalvas == null){
-                    Log.d("HomeActivity", "Não há disciplinas!");
-                    HomeActivity.disciplinasSalvas = new ArrayList<Disciplina>();
-                }
-                if(HomeActivity.disciplinasSalvas!=null)
-                    HomeActivity.disciplinasSalvas.add(disciplina);
-
-                ((HomeActivity) getActivity()).salvarDisciplinas();
-            }
-        });
-        */
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
+        limpaBanners();
         displayBanners();
     }
 
@@ -84,10 +64,10 @@ public class FragmentDisciplina extends Fragment {
     protected void criaBannerDisciplina(@NonNull Disciplina disciplina){
         String nomeDisciplina = disciplina.getNomeDisciplina();
         String nomeProfessor = disciplina.getNomeProfessor();
+        int qtdAulas = disciplina.getQuantidadeAulas();
         int corEscolhida = disciplina.getCorEscolhida();
 
         LinearLayout suporte = (LinearLayout) getView().findViewById(R.id.suporte_LinLay);
-        Log.d("HomeActivity", "Children: " + suporte.getChildCount());
 
         View banner = getLayoutInflater().inflate(R.layout.banner_disciplina, null, false);
         LinearLayout bannerDisciplina = banner.findViewById(R.id.layout_banner);
@@ -110,8 +90,16 @@ public class FragmentDisciplina extends Fragment {
         bannerDisciplina.setBackgroundColor(corEscolhida);
         TextView txtView_disciplina = bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina);
         txtView_disciplina.setText(nomeDisciplina);
-        TextView txtView_professor = bannerDisciplina.findViewById(R.id.txtView_nomeProfessor);
-        txtView_professor.setText(nomeProfessor);
+
+        LinearLayout layout_prof_aula = bannerDisciplina.findViewById(R.id.layout_prof_aula);
+
+        TextView txtView_professor = layout_prof_aula.findViewById(R.id.txtView_nomeProfessor);
+        txtView_professor.setText("Prof: " + nomeProfessor);
+
+        TextView txtView_aulas = layout_prof_aula.findViewById(R.id.txtView_qtdAulas);
+        String qtdAulasText = "Aulas: " + qtdAulas;
+        txtView_aulas.setText(qtdAulasText);
+
         suporte.addView(banner);
 
     }
@@ -119,7 +107,16 @@ public class FragmentDisciplina extends Fragment {
     private void displayBanners(){
         if(HomeActivity.disciplinasSalvas != null)
             for(int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++){
-                criaBannerDisciplina(HomeActivity.disciplinasSalvas.get(i));
+                Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
+                Log.d("HomeActivity", "DISCIPLINA " + i + ":");
+                disciplina.mostraDadosDisciplina();
+                criaBannerDisciplina(disciplina);
             }
+    }
+
+    private void limpaBanners(){
+        Log.d("HomeActivity", "Disciplinas: Limpando banners!");
+        LinearLayout suporte = (LinearLayout) getView().findViewById(R.id.suporte_LinLay);
+        suporte.removeAllViews();
     }
 }

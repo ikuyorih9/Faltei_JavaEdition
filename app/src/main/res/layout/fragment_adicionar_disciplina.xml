@@ -16,7 +16,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp">
 
-
         <EditText
             android:id="@+id/editText_nomeDisciplina"
             android:layout_width="match_parent"
@@ -35,6 +34,17 @@
             android:gravity="left"
             android:hint="Professor"
             />
+
+        <EditText
+            android:id="@+id/editText_qtdAulas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="left"
+            android:hint="Número de aulas"
+            android:ems="10"
+            android:inputType="number" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,6 +107,7 @@
         android:enabled="true"
         android:gravity="center"
         android:visibility="visible"
+        android:textSize="@dimen/tamanhoBotao"
         android:text="Criar disciplina" />
 
     <LinearLayout
@@ -118,6 +129,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
+            android:textSize="@dimen/tamanhoBotao"
             android:text="Apagar" />
 
         <Button
@@ -128,6 +140,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
+            android:textSize="@dimen/tamanhoBotao"
             android:text="Editar" />
     </LinearLayout>
 

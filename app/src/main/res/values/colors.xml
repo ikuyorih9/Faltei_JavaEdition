@@ -17,4 +17,7 @@
     <color name="darkGreen">#104C00</color>
     <color name="purple">#44004C</color>
     <color name="gray">#54000000</color>
+
+    <color name="faltaGrafico">#FF5F5F</color>
+    <color name="restanteGrafico">#9CBAFF</color>
 </resources>

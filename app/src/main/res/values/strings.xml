@@ -1,5 +1,26 @@
 <resources>
     <string name="nomeApp">Faltei!</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--  -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- SHARED PREFERENCES LABEL-KEYS -->
+    <string name="nomeDisciplinaKey">!nomeDisciplina</string>
+    <string name="nomeProfessorKey">!nomeProfessor</string>
+    <string name="corDisciplinaKey">!corDisciplina</string>
+    <string name="idFalta">"idFalta</string>
+    <string name="qtdAulasKey">!qtdAulas</string>
+    <string name="qtdDisciplinasKey">!quantidadeDisciplinas</string>
+    <string name="qtdFaltasKey">!quantidadeFaltas</string>
+
+    <!-- TEXTOS PRONTOS-->
+
+    <!-- FragmentMostrarFaltas -->
+    <string name="numAulas">"Número de aulas: "</string>
+    <string name="numFaltas">"Número de faltas: "</string>
+    <string name="numFaltasRestantes">"Você pode faltar: "</string>
+
+    <!-- FragmentHome-->
+    <string name="MensagemTranquila">Não se preocupe! Você está tranquilo em: </string>
+    <string name="MensagemCuidado">Cuidado, você já atingiu mais de 15% de falta nas matérias: </string>
+    <string name="MensagemEmergencia">ATENÇÃO! Você não pode mais faltar em: </string>
 </resources>
