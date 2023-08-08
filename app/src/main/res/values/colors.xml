@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="layoutBackground">#F6F1E6</color>
     <color name="inicio">#2d3856</color>
     <color name="titulo">#9f55a0</color>
     <color name="home">#fff7e4</color>
@@ -20,4 +21,12 @@
 
     <color name="faltaGrafico">#FF5F5F</color>
     <color name="restanteGrafico">#9CBAFF</color>
+
+    <!-- GRADUAÇÃO DE CORES HOME-->
+    <color name="desistencia">#330000</color> <!--30% faltas-->
+    <color name="emergencial">#660000</color> <!--30% faltas-->
+    <color name="perigo">#FF3333</color> <!--24% faltas-->
+    <color name="cuidado">#FFFF66</color> <!--18% faltas-->
+    <color name="tranquilo">#99FF33</color> <!--12% faltas-->
+    <color name="otimo">#00CC00</color> <!--6% faltas-->
 </resources>

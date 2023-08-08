@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
@@ -70,9 +71,10 @@ public class FragmentDisciplina extends Fragment {
         LinearLayout suporte = (LinearLayout) getView().findViewById(R.id.suporte_LinLay);
 
         View banner = getLayoutInflater().inflate(R.layout.banner_disciplina, null, false);
-        LinearLayout bannerDisciplina = banner.findViewById(R.id.layout_banner);
+        CardView bannerDisciplina = banner.findViewById(R.id.cardView_banner);
+        LinearLayout layout_bannerDisciplina = banner.findViewById(R.id.layout_banner);
 
-        bannerDisciplina.setOnClickListener(new View.OnClickListener() {
+        layout_bannerDisciplina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundleBannerDisciplina = new Bundle();
@@ -87,7 +89,7 @@ public class FragmentDisciplina extends Fragment {
             }
         });
 
-        bannerDisciplina.setBackgroundColor(corEscolhida);
+        bannerDisciplina.setCardBackgroundColor(corEscolhida);
         TextView txtView_disciplina = bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina);
         txtView_disciplina.setText(nomeDisciplina);
 

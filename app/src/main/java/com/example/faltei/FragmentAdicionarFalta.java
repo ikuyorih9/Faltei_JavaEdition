@@ -51,6 +51,8 @@ public class FragmentAdicionarFalta extends Fragment {
     }
 
     public void configuraSpinnerDisciplinas(){
+        if(HomeActivity.disciplinasSalvas == null)
+            return;
         ArrayList<String> nomeDisciplinas = new ArrayList<String>();
         for(int i = 0; i <HomeActivity.disciplinasSalvas.size(); i++){
             Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
@@ -64,11 +66,22 @@ public class FragmentAdicionarFalta extends Fragment {
         bAdicionarFalta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(HomeActivity.disciplinasSalvas == null
+                || HomeActivity.disciplinasSalvas.isEmpty()){
+                    Snackbar.make(view, "Não há disciplinas para adicionar faltas.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+
                 int iDisciplina = (int) spinnerDisciplina.getSelectedItemId();
                 Disciplina disciplinaSelecionada = HomeActivity.disciplinasSalvas.get(iDisciplina);
 
                 if(selectedDate == null){
                     Snackbar.make(view, "Selecione uma data!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+
+                if(disciplinaSelecionada.getQuantidadeFaltas() >= disciplinaSelecionada.getQuantidadeAulas()){
+                    Snackbar.make(view, "Você já atingiu o máximo de faltas possível!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
 

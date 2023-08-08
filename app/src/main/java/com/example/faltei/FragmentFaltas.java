@@ -109,42 +109,21 @@ public class FragmentFaltas extends Fragment {
 
         //Obtém o gráfico do banner.
         PieChart grafico = bannerDisciplina.findViewById(R.id.chart_faltasDisciplina);
-
-        int qtdFaltas = disciplina.getQuantidadeFaltas();
-        //int qtdFaltas = 2;
-        int qtdAulas = disciplina.getQuantidadeAulas();
-        int qtdRestante = qtdAulas - qtdFaltas;
-
-        Log.d("HomeActivity","Quantidade de aulas: " + qtdAulas);
-        Log.d("HomeActivity","Quantidade de faltas: " + qtdFaltas);
-        Log.d("HomeActivity","Quantidade restante: " + qtdRestante);
-
-        ArrayList<PieEntry> dados = new ArrayList<>();
-        dados.add(new PieEntry(qtdFaltas, "Faltas"));
-        dados.add(new PieEntry(qtdRestante, "Restante"));
-
-        ArrayList<Integer> cores = new ArrayList<>();
-        cores.add(getResources().getColor(R.color.faltaGrafico));
-        cores.add(getResources().getColor(R.color.restanteGrafico));
-
-        PieDataSet dataSett = new PieDataSet(dados, "");
-        dataSett.setColors(cores);
-        PieData datta = new PieData(dataSett);
-
-        grafico.setData(datta);
-        grafico.setRotationAngle(90);
-        grafico.setHoleColor(Color.TRANSPARENT);
-        grafico.getDescription().setEnabled(false);
-        grafico.getLegend().setEnabled(false);
-        grafico.getData().setDrawValues(false);
-        grafico.setDrawEntryLabels(false);
-        grafico.setUsePercentValues(true);
-        grafico.invalidate();
+        disciplina.iniciaGraficoFaltas(grafico, getResources().getColor(R.color.faltaGrafico));
 
         return banner;
     }
 
     public void configuraGraficoGeral(){
+        geralFaltas.setNoDataText(getString(R.string.MensagemSemFalta));
+        geralFaltas.setNoDataTextColor(Color.BLACK);
+
+        if(HomeActivity.disciplinasSalvas == null || HomeActivity.disciplinasSalvas.size()==0){
+            geralFaltas.setData(null);
+            geralFaltas.invalidate();
+            return;
+        }
+
         ArrayList<PieEntry> dadosGeraisFaltas = new ArrayList<>();
         ArrayList<Integer> corDisciplinas = new ArrayList<>();
         int qtdFaltasTotal = 0;
@@ -163,12 +142,15 @@ public class FragmentFaltas extends Fragment {
         dadosGeraisFaltas.add(new PieEntry(qtdAulasRestante, "Aulas restantes"));
         corDisciplinas.add(getResources().getColor(R.color.restanteGrafico));
 
-        PieDataSet dataSet = new PieDataSet(dadosGeraisFaltas, "Faltas");
+        PieDataSet dataSet = new PieDataSet(dadosGeraisFaltas, "");
         dataSet.setColors(corDisciplinas);
         PieData data = new PieData(dataSet);
         geralFaltas.setData(data);
         geralFaltas.setRotationAngle(90);
         geralFaltas.setHoleColor(Color.TRANSPARENT);
+        geralFaltas.getData().setValueTextSize(10);
+        geralFaltas.setHoleRadius(40f);
+        geralFaltas.setTransparentCircleRadius(45f);
         geralFaltas.getDescription().setEnabled(false);
         geralFaltas.setUsePercentValues(true);
         geralFaltas.getData().setValueTextColor(Color.WHITE);

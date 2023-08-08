@@ -2,5 +2,5 @@
 <resources>
     <dimen name="tamanhoBotao">16sp</dimen>
     <dimen name="tamanhoTexto">16sp</dimen>
-    <dimen name="tamanhoTitulo">32sp</dimen>
+    <dimen name="tamanhoTitulo">24sp</dimen>
 </resources>

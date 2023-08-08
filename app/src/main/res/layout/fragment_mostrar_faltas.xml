@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/home"
     tools:context=".FragmentMostrarFaltas">
 
     <LinearLayout
@@ -11,6 +12,17 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtView_nomeDisciplina_mostrarFalta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="@dimen/tamanhoTitulo"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="NOME DISCIPLINA"/>
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart_estatisticaDisciplina"
@@ -44,7 +56,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="@dimen/tamanhoTexto"
-                android:text="Você pode faltar: "/>
+                android:text="Você pode faltar, no máximo: "/>
 
         </LinearLayout>
 

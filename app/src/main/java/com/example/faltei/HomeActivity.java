@@ -83,15 +83,14 @@ public class HomeActivity extends AppCompatActivity {
 
     public void salvarDisciplinas(){
         Log.d("HomeActivity", "Salvando disciplinas!");
-        if(disciplinasSalvas == null)
-            return;
-
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         int size = disciplinasSalvas.size();
+        if(disciplinasSalvas == null)
+            size = 0;
+        Log.d("HomeActivity", "Salvando" + size + " disciplinas!");
         editor.putInt(getString(R.string.qtdDisciplinasKey), size);
-        Log.d("HomeActivity", "Quantidade de disciplinas: " + size);
 
         for(int i = 0; i < size; i++){
             Disciplina disciplina = disciplinasSalvas.get(i);
@@ -114,10 +113,9 @@ public class HomeActivity extends AppCompatActivity {
                 String prefixo = getString(R.string.nomeDisciplinaKey) + i;
                 editor.putString(prefixo + getString(R.string.idFalta) + j, dateString);
             }
-            editor.apply();
-
             Log.d("HomeActivity", "Disciplina " + nomeDisciplina + " salva!");
         }
+        editor.apply();
     }
 
     public void carregarDisciplinas(){
@@ -189,8 +187,8 @@ public class HomeActivity extends AppCompatActivity {
 
         disciplinasSalvas.remove(iDisciplina);
         int quantidadeDisciplinas = disciplinasSalvas.size();
-        sharedPref.edit().remove(getString(R.string.qtdDisciplinasKey));
         sharedPref.edit().putInt(getString(R.string.qtdDisciplinasKey), quantidadeDisciplinas);
-        sharedPref.edit().commit();
+        sharedPref.edit().apply();
+        Log.d("HomeActivity", "Agora há somente " + quantidadeDisciplinas + " disciplinas.");
     }
 }

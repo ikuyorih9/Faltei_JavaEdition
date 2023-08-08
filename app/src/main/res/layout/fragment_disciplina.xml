@@ -5,11 +5,14 @@
     android:id="@+id/mainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/home"
     tools:context=".FragmentDisciplina">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/layoutBackground">
 
         <LinearLayout
             android:id="@+id/suporte_LinLay"

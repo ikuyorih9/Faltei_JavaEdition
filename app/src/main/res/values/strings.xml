@@ -20,7 +20,10 @@
     <string name="numFaltasRestantes">"Você pode faltar: "</string>
 
     <!-- FragmentHome-->
-    <string name="MensagemTranquila">Não se preocupe! Você está tranquilo em: </string>
-    <string name="MensagemCuidado">Cuidado, você já atingiu mais de 15% de falta nas matérias: </string>
-    <string name="MensagemEmergencia">ATENÇÃO! Você não pode mais faltar em: </string>
+    <string name="MensagemInfoCards">
+        Aqui aparecerão as disciplinas em ordem de maior falta. Quanto mais vermelho a cor do card,
+        mais crítica está a situação na disciplina, assim como quando mais verde, melhor a situação.
+        Tome cuidado!
+    </string>
+    <string name="MensagemSemFalta">"Ótimo! Você não possui faltas :)"</string>
 </resources>

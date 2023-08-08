@@ -131,11 +131,14 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
 
-                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
-                if(etQtdAulas.getText().toString().isEmpty()){
-                    Snackbar.make(view, "Insira a quantidade de aulas.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Log.d("HomeActivity", "QUANTIDADE AULAS: " + etQtdAulas.getText() + etQtdAulas.getText());
+
+                if(etQtdAulas.getText().toString().isEmpty()
+                        || Integer.parseInt(etQtdAulas.getText().toString()) <= 0){
+                    Snackbar.make(view, "Insira uma quantidade de aulas válida.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
+                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
                 disciplina.setQuantidadeAulas(qtdAulas);
 
                 disciplina.setCorEscolhida(corEscolhida);
@@ -145,6 +148,8 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 }
 
                 Snackbar.make(view, "Disciplina criada!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                disciplina.setFaltas(disciplinaRecebida.getFaltas());
 
                 int iDisciplina = HomeActivity.disciplinasSalvas.indexOf(disciplinaRecebida);
                 HomeActivity.disciplinasSalvas.remove(iDisciplina);
@@ -183,7 +188,6 @@ public class FragmentAdicionarDisciplina extends Fragment {
         bApagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ((HomeActivity) getActivity()).apagarDisciplina(disciplinaRecebida);
                 ((HomeActivity) getActivity()).salvarDisciplinas();
 
@@ -219,11 +223,12 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
 
-                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
-                if(etQtdAulas.getText().toString().isEmpty()){
-                    Snackbar.make(view, "Insira a quantidade de aulas.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if(etQtdAulas.getText().toString().isEmpty()
+                        || Integer.parseInt(etQtdAulas.getText().toString()) <= 0){
+                    Snackbar.make(view, "Insira uma quantidade de aulas válida.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
+                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
                 disciplina.setQuantidadeAulas(qtdAulas);
 
                 if(disciplina.getCorEscolhida() == -1){

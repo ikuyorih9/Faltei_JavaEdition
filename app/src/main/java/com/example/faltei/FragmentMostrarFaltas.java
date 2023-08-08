@@ -34,7 +34,7 @@ public class FragmentMostrarFaltas extends Fragment {
     private FragmentMostrarFaltasBinding binding;
     private Disciplina disciplina;
     private PieChart graficoDisciplina;
-
+    private TextView txtView_nomeDisciplina;
     private TextView txtView_numFaltas;
     private TextView txtView_numAulas;
     private TextView txtView_faltasRestantes;
@@ -54,6 +54,7 @@ public class FragmentMostrarFaltas extends Fragment {
                     Log.e("HomeActivity", "Erro ao receber disciplina em FragmentMostrarFaltas");
                 else
                     disciplina = (Disciplina) HomeActivity.disciplinasSalvas.get(i);
+                txtView_nomeDisciplina.setText(disciplina.getNomeDisciplina());
                 criarGrafico();
                 configuraInfo();
                 configuraLista();
@@ -66,13 +67,14 @@ public class FragmentMostrarFaltas extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMostrarFaltasBinding.inflate(getLayoutInflater());
         graficoDisciplina = binding.chartEstatisticaDisciplina;
+        txtView_nomeDisciplina = binding.txtViewNomeDisciplinaMostrarFalta;
         txtView_numAulas = binding.txtViewNumAulas;
         txtView_numFaltas = binding.txtViewNumFaltas;
         txtView_faltasRestantes = binding.txtViewFaltasRestantes;
         listView_listaFaltas = binding.listViewLista;
+
         removerFalta();
         itemSelecionadoListener();
-
         return binding.getRoot();
     }
 
@@ -98,11 +100,18 @@ public class FragmentMostrarFaltas extends Fragment {
 
         PieData data = new PieData(dataSet);
 
+        graficoDisciplina.setNoDataText(getString(R.string.MensagemSemFalta));
+        graficoDisciplina.setNoDataTextColor(Color.BLACK);
+
         graficoDisciplina.setData(data);
         graficoDisciplina.setRotationAngle(90);
         graficoDisciplina.setHoleColor(Color.TRANSPARENT);
+        graficoDisciplina.getData().setValueTextSize(10);
+        graficoDisciplina.setHoleRadius(40f);
+        graficoDisciplina.setTransparentCircleRadius(45f);
         graficoDisciplina.getDescription().setEnabled(false);
         graficoDisciplina.setUsePercentValues(true);
+        graficoDisciplina.getData().setValueTextColor(Color.WHITE);
         graficoDisciplina.invalidate();
     }
 

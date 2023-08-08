@@ -2,7 +2,14 @@ package com.example.faltei;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.Log;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -43,6 +50,46 @@ public class Disciplina implements Serializable {
 
     public void setQuantidadeAulas(int quantidadeAulas){
         this.quantidadeAulas = quantidadeAulas;
+    }
+
+    public void setFaltas(ArrayList<Date> faltas){
+        this.faltas = faltas;
+    }
+    public boolean iniciaGraficoFaltas(PieChart graficoFaltas, int corFalta){
+        Log.d("HomeActivity", "INICIANDO GRAFICO!");
+        if(graficoFaltas == null){
+            return false;
+        }
+
+        int qtdFaltas = faltas.size();
+        int restanteAulas = quantidadeAulas - qtdFaltas;
+
+        ArrayList <PieEntry> dadosEntrada = new ArrayList<>();
+        dadosEntrada.add(new PieEntry(qtdFaltas, "Faltas"));
+        dadosEntrada.add(new PieEntry(restanteAulas, "Restante"));
+
+        ArrayList<Integer> cores = new ArrayList<>();
+        cores.add(corFalta);
+        cores.add(Color.LTGRAY);
+
+        PieDataSet dataSet = new PieDataSet(dadosEntrada, "Faltas");
+        dataSet.setColors(cores);
+
+        PieData data = new PieData(dataSet);
+
+        graficoFaltas.setData(data);
+        graficoFaltas.setRotationAngle(90);
+        graficoFaltas.setHoleColor(Color.TRANSPARENT);
+        graficoFaltas.getDescription().setEnabled(false);
+        graficoFaltas.getLegend().setEnabled(false);
+        graficoFaltas.getData().setValueTextSize(10);
+        graficoFaltas.getData().setValueTextColor(Color.WHITE);
+        graficoFaltas.setHoleRadius(40f);
+        graficoFaltas.setTransparentCircleRadius(40f);
+        graficoFaltas.setDrawEntryLabels(false);
+        graficoFaltas.setUsePercentValues(true);
+        graficoFaltas.invalidate();
+        return true;
     }
 
     public void adicionarFaltaOrdenado(Date data){
@@ -90,10 +137,11 @@ public class Disciplina implements Serializable {
         return faltas.get(i);
     }
 
-    public int getPercentualFaltas(){
-        int qtdFaltas = faltas.size();
-        int qtdAulas = quantidadeAulas;
-        return qtdFaltas/qtdAulas;
+    public ArrayList <Date> getFaltas(){
+        return faltas;
+    }
+    public double getPercentualFaltas(){
+        return ((double) faltas.size())/quantidadeAulas;
     }
 
     public boolean equalDisciplina(Disciplina disciplina){
