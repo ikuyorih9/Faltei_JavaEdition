@@ -224,3 +224,32 @@ Com os gráficos adicionados, foi possível criar as telas de estatística de fa
 O que eu descobri nesses dois dias foi a utilizar Spinners, ListViews e charts. Como não são mudanças muito significativas (apenas manipulação de layouts) não tem muito o que escrever.
 
 O próximo passo é mudar o design da Home. Planejo colocar um outro piechart, junto a uma série banners ordenados do estado mais emergencial de faltas ao mais tranquilo. A ideia é entrar na Home e já entender sua situação sobre o controle de faltas. Mas, para isso, preciso descobrir como trabalhar com percentuais, pois está acontecendo um erro ao escrever as porcentagens nos logs.
+
+## 8 de agosto de 2023: design da Home e manutenção dos gráficos.
+
+Projeto está muito perto de acabar. Hoje, eu o fiz ficar 100% funcional. Primeiro, eu resolvi o problema das porcentagens (na verdade, eu não sei o que estava acontecendo na última vez) e, com isso, consegui colocar as maiores faltas na home, em ordem de prioridade.
+
+<p align = "center">
+    <img width=200 src="diaryImages/08.08.23 - home vazia.png">
+    <img width=200 src="diaryImages/08.08.23 - home cheia.png">
+</p>
+
+Além disso, eu configurei melhor os gráficos, para facilitar a visualização. Eu ainda não sei qual gráfico ficar na aba de Faltas. O gráfico que está lá é uma contabilidade do total de faltas, perante o total de aulas, mas isso não é nada útil.
+
+Corrigi alguns bugs:
+
+* Ao apagar a última disciplina restante, após apagar todas as outras, o aplicativo não salvava as alterações;
+
+* Agora você é impedido de adicionar uma disciplina sem a quantidade de aulas, ou 0 aulas;
+
+* Quando tentava adicionar uma falta, com a lista de disciplinas não inicializada, ocorria um erro;
+
+* Não é mais permitido adicionar mais faltas que aulas.
+
+Ainda preciso adicionar:
+
+* Uma tela de configurações, para configurar a taxa de presença necessária, as informações do aplicativo etc;
+
+* Um ícone;
+
+* Ícones de navegação.
