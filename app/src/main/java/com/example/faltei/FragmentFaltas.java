@@ -47,17 +47,6 @@ public class FragmentFaltas extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentFaltasBinding.inflate(getLayoutInflater()); //Cria um objeto de vinculação.
 
-        binding.addFalta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity()
-                        .getSupportFragmentManager()
-                        .findFragmentById(R.id.nav_contentMain);
-                NavController navControl= navHostFragment.getNavController();
-                navControl.navigate(R.id.action_addFaltas);
-            }
-        });
-
         geralFaltas = binding.chartGeral;
 
         configuraGraficoGeral();

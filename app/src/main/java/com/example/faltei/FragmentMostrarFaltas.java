@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.faltei.databinding.FragmentFaltasBinding;
 import com.example.faltei.databinding.FragmentMostrarFaltasBinding;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -33,6 +36,7 @@ public class FragmentMostrarFaltas extends Fragment {
 
     private FragmentMostrarFaltasBinding binding;
     private Disciplina disciplina;
+    private PieChart geralFaltas;
     private PieChart graficoDisciplina;
     private TextView txtView_nomeDisciplina;
     private TextView txtView_numFaltas;
@@ -72,6 +76,17 @@ public class FragmentMostrarFaltas extends Fragment {
         txtView_numFaltas = binding.txtViewNumFaltas;
         txtView_faltasRestantes = binding.txtViewFaltasRestantes;
         listView_listaFaltas = binding.listViewLista;
+
+        binding.addFalta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment navHostFragment = (NavHostFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_contentMain);
+                NavController navControl= navHostFragment.getNavController();
+                navControl.navigate(R.id.action_addFaltas);
+            }
+        });
 
         removerFalta();
         itemSelecionadoListener();
