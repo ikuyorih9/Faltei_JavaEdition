@@ -74,6 +74,8 @@ public class Disciplina implements Serializable {
 
         PieDataSet dataSet = new PieDataSet(dadosEntrada, "Faltas");
         dataSet.setColors(cores);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData data = new PieData(dataSet);
 
@@ -82,10 +84,12 @@ public class Disciplina implements Serializable {
         graficoFaltas.setHoleColor(Color.TRANSPARENT);
         graficoFaltas.getDescription().setEnabled(false);
         graficoFaltas.getLegend().setEnabled(false);
-        graficoFaltas.getData().setValueTextSize(10);
-        graficoFaltas.getData().setValueTextColor(Color.WHITE);
-        graficoFaltas.setHoleRadius(40f);
-        graficoFaltas.setTransparentCircleRadius(40f);
+        graficoFaltas.getData().setDrawValues(false);
+        graficoFaltas.setCenterTextSize(10);
+
+        graficoFaltas.setCenterText(String.format("%.1f",getPercentualFaltas()*100) + "%");
+        graficoFaltas.setHoleRadius(35f);
+        graficoFaltas.setTransparentCircleRadius(35f);
         graficoFaltas.setDrawEntryLabels(false);
         graficoFaltas.setUsePercentValues(true);
         graficoFaltas.invalidate();

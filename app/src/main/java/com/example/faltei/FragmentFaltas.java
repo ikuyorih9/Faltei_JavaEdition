@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -81,17 +82,18 @@ public class FragmentFaltas extends Fragment {
 
     public View criaBannerDisciplina(Disciplina disciplina){
         //Obtém o fragmento do banner de uma disciplina.
-        View banner = getLayoutInflater().inflate(R.layout.banner_falta, null, false);
+        View banner = getLayoutInflater().inflate(R.layout.banner_home, null, false);
         //Obtém o layout do banner de uma disciplina.
-        LinearLayout bannerDisciplina = banner.findViewById(R.id.layout_banner_falta);
+        CardView bannerDisciplina = banner.findViewById(R.id.cardView_bannerHome);
+        LinearLayout layout_bannerDisciplina = banner.findViewById(R.id.layout_internoCardView);
 
-        bannerDisciplina.setBackgroundColor(disciplina.getCorEscolhida());
+        bannerDisciplina.setCardBackgroundColor(disciplina.getCorEscolhida());
 
         //Obtém o textView do banner.
-        TextView txtView_nomeDisciplina = bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina_falta);
+        TextView txtView_nomeDisciplina = layout_bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina_bannerHome);
         txtView_nomeDisciplina.setText(disciplina.getNomeDisciplina());
 
-        bannerDisciplina.setOnClickListener(new View.OnClickListener() {
+        layout_bannerDisciplina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int iDisciplina = HomeActivity.disciplinasSalvas.indexOf(disciplina);
@@ -108,7 +110,7 @@ public class FragmentFaltas extends Fragment {
         });
 
         //Obtém o gráfico do banner.
-        PieChart grafico = bannerDisciplina.findViewById(R.id.chart_faltasDisciplina);
+        PieChart grafico = bannerDisciplina.findViewById(R.id.chartDisciplina_bannerHome);
         disciplina.iniciaGraficoFaltas(grafico, getResources().getColor(R.color.faltaGrafico));
 
         return banner;

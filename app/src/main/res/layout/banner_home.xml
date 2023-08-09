@@ -26,17 +26,20 @@
                 android:id="@+id/txtView_nomeDisciplina_bannerHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="@dimen/tamanhoTitulo"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="DISCIPLINA"/>
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chartDisciplina_bannerHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:clipToPadding="false"/>
         </LinearLayout>
 
 

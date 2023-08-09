@@ -16,16 +16,16 @@
     <color name="darkBlue">#00027A</color>
     <color name="yellow">#FFB700</color>
     <color name="darkGreen">#104C00</color>
-    <color name="purple">#44004C</color>
+    <color name="purple">#7F00FF</color>
     <color name="gray">#54000000</color>
 
     <color name="faltaGrafico">#FF5F5F</color>
     <color name="restanteGrafico">#9CBAFF</color>
 
     <!-- GRADUAÇÃO DE CORES HOME-->
-    <color name="desistencia">#330000</color> <!--30% faltas-->
-    <color name="emergencial">#660000</color> <!--30% faltas-->
-    <color name="perigo">#FF3333</color> <!--24% faltas-->
+    <color name="desistencia">#FF0000</color> <!--30%+ faltas-->
+    <color name="emergencial">#FF3333</color> <!--30% faltas-->
+    <color name="perigo">#FF5E00</color> <!--24% faltas-->
     <color name="cuidado">#FFFF66</color> <!--18% faltas-->
     <color name="tranquilo">#99FF33</color> <!--12% faltas-->
     <color name="otimo">#00CC00</color> <!--6% faltas-->

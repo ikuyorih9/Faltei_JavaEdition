@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tamanhoBotao">16sp</dimen>
+    <dimen name="tamanhoChart">12sp</dimen>
     <dimen name="tamanhoTexto">16sp</dimen>
     <dimen name="tamanhoTitulo">24sp</dimen>
 </resources>

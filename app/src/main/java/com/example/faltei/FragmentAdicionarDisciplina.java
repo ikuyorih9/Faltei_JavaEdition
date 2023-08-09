@@ -175,11 +175,12 @@ public class FragmentAdicionarDisciplina extends Fragment {
             public void onClick(View view) {
                 Drawable backgroud = view.getBackground();
                 if(backgroud instanceof ColorDrawable)
-                    disciplina.setCorEscolhida(((ColorDrawable) backgroud).getColor());
+                    corEscolhida = ((ColorDrawable) backgroud).getColor();
+                    //disciplina.setCorEscolhida(((ColorDrawable) backgroud).getColor());
                 else
                     disciplina.setCorEscolhida(-1);
                 Log.d("HomeActivity", "Cor clicada: " + corEscolhida);
-                amostraCor.setBackgroundColor(disciplina.getCorEscolhida());
+                amostraCor.setBackgroundColor(corEscolhida);
             }
         });
     }

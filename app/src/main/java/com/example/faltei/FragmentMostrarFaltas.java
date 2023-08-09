@@ -95,7 +95,7 @@ public class FragmentMostrarFaltas extends Fragment {
         cores.add(disciplina.getCorEscolhida());
         cores.add(getResources().getColor(R.color.restanteGrafico));
 
-        PieDataSet dataSet = new PieDataSet(dadosEntrada, "A");
+        PieDataSet dataSet = new PieDataSet(dadosEntrada, "");
         dataSet.setColors(cores);
 
         PieData data = new PieData(dataSet);
