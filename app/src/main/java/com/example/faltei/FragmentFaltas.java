@@ -92,7 +92,7 @@ public class FragmentFaltas extends Fragment {
                         .getSupportFragmentManager()
                         .findFragmentById(R.id.nav_contentMain);
                 NavController navControl= navHostFragment.getNavController();
-                navControl.navigate(R.id.action_mostrarFaltas);
+                navControl.navigate(R.id.action_mostrarFaltas, bundleBannerFalta);
             }
         });
 

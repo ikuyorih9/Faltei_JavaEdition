@@ -50,6 +50,9 @@ public class FragmentMostrarFaltas extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        /*
         getParentFragmentManager().setFragmentResultListener("bundleFragment", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
@@ -64,6 +67,20 @@ public class FragmentMostrarFaltas extends Fragment {
                 configuraLista();
             }
         });
+
+        if(disciplina != null){
+            Log.d("HomeActivity", disciplina.toString());
+            criarGrafico();
+            configuraInfo();
+            configuraLista();
+        }
+        */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -77,14 +94,24 @@ public class FragmentMostrarFaltas extends Fragment {
         txtView_faltasRestantes = binding.txtViewFaltasRestantes;
         listView_listaFaltas = binding.listViewLista;
 
+        int id = getArguments().getInt("bundleBannerFalta");
+        Log.d("HomeActivity", "ID RECEBIDO DA NAVEGAÇÂO: " + id);
+        disciplina = (Disciplina) HomeActivity.disciplinasSalvas.get(id);
+        criarGrafico();
+        configuraInfo();
+        configuraLista();
+
         binding.addFalta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int id = HomeActivity.disciplinasSalvas.indexOf(disciplina);
+                Bundle idBundle = new Bundle();
+                idBundle.putInt("disciplinaIdKey", id);
                 NavHostFragment navHostFragment = (NavHostFragment) getActivity()
                         .getSupportFragmentManager()
                         .findFragmentById(R.id.nav_contentMain);
                 NavController navControl= navHostFragment.getNavController();
-                navControl.navigate(R.id.action_addFaltas);
+                navControl.navigate(R.id.action_addFaltas, idBundle);
             }
         });
 

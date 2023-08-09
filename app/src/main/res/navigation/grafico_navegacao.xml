@@ -29,9 +29,6 @@
         android:label="Faltas"
         tools:layout="@layout/fragment_faltas">
         <action
-            android:id="@+id/action_addFaltas"
-            app:destination="@id/nav_addFalta"/>
-        <action
             android:id="@+id/action_mostrarFaltas"
             app:destination="@id/nav_mostraFalta"/>
     </fragment>
@@ -52,8 +49,8 @@
         android:label="Adicionar falta"
         tools:layout="@layout/fragment_adicionar_falta">
         <action
-            android:id="@+id/action_voltarFaltas"
-            app:destination="@+id/nav_faltas"/>
+            android:id="@+id/action_voltarMostraFalta"
+            app:destination="@+id/nav_mostraFalta"/>
 
     </fragment>
 
@@ -65,6 +62,9 @@
         <action
             android:id="@+id/action_voltarFaltas_fromMostrar"
             app:destination="@+id/nav_faltas"/>
+        <action
+            android:id="@+id/action_addFaltas"
+            app:destination="@id/nav_addFalta"/>
 
     </fragment>
 

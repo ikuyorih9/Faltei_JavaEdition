@@ -28,38 +28,25 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class FragmentAdicionarFalta extends Fragment {
-    FragmentAdicionarFaltaBinding binding;
-    Button bAdicionarFalta;
-    Spinner spinnerDisciplina;
-    CalendarView calendarView;
+    private FragmentAdicionarFaltaBinding binding;
+    private Button bAdicionarFalta;
+    private CalendarView calendarView;
+    private Date selectedDate;
 
-    Date selectedDate;
+    private int id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAdicionarFaltaBinding.inflate(getLayoutInflater());
         bAdicionarFalta = binding.buttonAdicionarFalta;
-        spinnerDisciplina = binding.spinnerDisciplina;
         calendarView = binding.calendarView;
 
+        id = getArguments().getInt("disciplinaIdKey");
+
         adicionarFaltaListener();
-        configuraSpinnerDisciplinas();
-        calendarListener();;
-
+        calendarListener();
         return binding.getRoot();
-    }
-
-    public void configuraSpinnerDisciplinas(){
-        if(HomeActivity.disciplinasSalvas == null)
-            return;
-        ArrayList<String> nomeDisciplinas = new ArrayList<String>();
-        for(int i = 0; i <HomeActivity.disciplinasSalvas.size(); i++){
-            Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
-            nomeDisciplinas.add(disciplina.getNomeDisciplina());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,nomeDisciplinas);
-        spinnerDisciplina.setAdapter(adapter);
     }
 
     public void adicionarFaltaListener(){
@@ -72,8 +59,8 @@ public class FragmentAdicionarFalta extends Fragment {
                     return;
                 }
 
-                int iDisciplina = (int) spinnerDisciplina.getSelectedItemId();
-                Disciplina disciplinaSelecionada = HomeActivity.disciplinasSalvas.get(iDisciplina);
+                Log.d("HomeActivity", "ADICIONAR FALTA LISTENER - ID: " + id);
+                Disciplina disciplinaSelecionada = HomeActivity.disciplinasSalvas.get(id);
 
                 if(selectedDate == null){
                     Snackbar.make(view, "Selecione uma data!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
