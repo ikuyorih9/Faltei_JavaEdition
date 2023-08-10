@@ -141,7 +141,7 @@
             android:clickable="true"
             android:gravity="center"
             android:textSize="@dimen/tamanhoBotao"
-            android:text="Editar" />
+            android:text="Salvar" />
     </LinearLayout>
 
 

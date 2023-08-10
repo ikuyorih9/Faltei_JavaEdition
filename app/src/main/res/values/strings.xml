@@ -25,5 +25,24 @@
         mais crítica está a situação na disciplina, assim como quando mais verde, melhor a situação.
         Tome cuidado!
     </string>
+
+    <string name="MensagemReprovado">
+        "Sinto muito, você está reprovado por faltas :("
+    </string>
+    <string name="MensagemEmergente">
+        "Emergência! Você esta perto de reprovar! Há apenas X faltas restantes."
+    </string> <!--30%-->
+    <string name="MensagemPerigo">
+        "Pare de faltar! Está com apenas X faltas restantes!"
+    </string> <!--24%-->
+    <string name="MensagemCuidado">
+        "Cuidado! Você possui apenas X faltas restantes"
+    </string> <!--18%-->
+    <string name="MensagemOk">
+        "Ainda está tudo bem, você ainda possui X faltas restantes."
+    </string> <!--12%-->
+    <string name="MensagemTranquilo">
+        "Não se preocupe, você ainda possui X faltas restantes!"
+    </string> <!--6%-->
     <string name="MensagemSemFalta">"Ótimo! Você não possui faltas :)"</string>
 </resources>

@@ -71,18 +71,17 @@ public class FragmentFaltas extends Fragment {
 
     public View criaBannerDisciplina(Disciplina disciplina){
         //Obtém o fragmento do banner de uma disciplina.
-        View banner = getLayoutInflater().inflate(R.layout.banner_home, null, false);
+        View banner = getLayoutInflater().inflate(R.layout.banner_falta, null, false);
         //Obtém o layout do banner de uma disciplina.
-        CardView bannerDisciplina = banner.findViewById(R.id.cardView_bannerHome);
-        LinearLayout layout_bannerDisciplina = banner.findViewById(R.id.layout_internoCardView);
+        LinearLayout bannerDisciplina = banner.findViewById(R.id.layout_banner_falta);
 
-        bannerDisciplina.setCardBackgroundColor(disciplina.getCorEscolhida());
+        bannerDisciplina.setBackgroundColor(disciplina.getCorEscolhida());
 
         //Obtém o textView do banner.
-        TextView txtView_nomeDisciplina = layout_bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina_bannerHome);
+        TextView txtView_nomeDisciplina = bannerDisciplina.findViewById(R.id.txtView_nomeDisciplina_falta);
         txtView_nomeDisciplina.setText(disciplina.getNomeDisciplina());
 
-        layout_bannerDisciplina.setOnClickListener(new View.OnClickListener() {
+        bannerDisciplina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int iDisciplina = HomeActivity.disciplinasSalvas.indexOf(disciplina);
@@ -99,9 +98,9 @@ public class FragmentFaltas extends Fragment {
         });
 
         //Obtém o gráfico do banner.
-        PieChart grafico = bannerDisciplina.findViewById(R.id.chartDisciplina_bannerHome);
+        PieChart grafico = bannerDisciplina.findViewById(R.id.chart_faltasDisciplina);
         disciplina.iniciaGraficoFaltas(grafico, getResources().getColor(R.color.faltaGrafico));
-
+        grafico.setCenterTextColor(getResources().getColor(R.color.white));
         return banner;
     }
 

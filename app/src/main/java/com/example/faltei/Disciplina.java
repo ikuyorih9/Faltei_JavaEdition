@@ -23,7 +23,8 @@ public class Disciplina implements Serializable {
     private String nomeProfessor;
     private int corEscolhida;
     private int quantidadeAulas;
-
+    private int quantidadeLimiteFaltas;
+    private int quantidadeCreditos;
     private ArrayList <Date> faltas;
 
     public Disciplina(String nomeDisciplina, String nomeProfessor, int corEscolhida, int quantidadeAulas){
@@ -32,10 +33,12 @@ public class Disciplina implements Serializable {
         this.corEscolhida = corEscolhida;
         this.quantidadeAulas = quantidadeAulas;
         faltas = new ArrayList<>();
+        quantidadeLimiteFaltas = quantidadeAulas - ((int)((HomeActivity.mediaFaltas) * quantidadeAulas)+1);
     }
 
     public Disciplina(){
         faltas = new ArrayList<>();
+        quantidadeLimiteFaltas = 0;
     }
 
     public void setNomeDisciplina(String nomeDisciplina){
@@ -52,6 +55,9 @@ public class Disciplina implements Serializable {
         this.quantidadeAulas = quantidadeAulas;
     }
 
+    public void setLimiteFaltas(int quantidadeLimiteFaltas){
+        this.quantidadeLimiteFaltas = quantidadeLimiteFaltas;
+    }
     public void setFaltas(ArrayList<Date> faltas){
         this.faltas = faltas;
     }
@@ -95,7 +101,6 @@ public class Disciplina implements Serializable {
         graficoFaltas.invalidate();
         return true;
     }
-
     public void adicionarFaltaOrdenado(Date data){
         int size = faltas.size();
         for(int i = 0; i < size; i++){
@@ -105,42 +110,40 @@ public class Disciplina implements Serializable {
             }
         }
         faltas.add(data);
+        quantidadeLimiteFaltas--;
     }
     public void adicionarFalta(Date data){
         faltas.add(data);
+        quantidadeLimiteFaltas --;
     }
-
     public void removerFalta(Date data){
         faltas.remove(data);
+        quantidadeLimiteFaltas++;
     }
     public void removerFalta(int index){
         faltas.remove(index);
     }
-
     public String getNomeDisciplina(){
         return nomeDisciplina;
     }
-
     public String getNomeProfessor(){
         return nomeProfessor;
     }
-
     public int getCorEscolhida(){
         return corEscolhida;
     }
-
     public int getQuantidadeAulas(){
         return quantidadeAulas;
     }
-
     public int getQuantidadeFaltas(){
         return faltas.size();
     }
-
     public Date getFalta(int i){
         return faltas.get(i);
     }
-
+    public int getQuantidadeLimiteFaltas(){
+        return quantidadeLimiteFaltas;
+    }
     public ArrayList <Date> getFaltas(){
         return faltas;
     }

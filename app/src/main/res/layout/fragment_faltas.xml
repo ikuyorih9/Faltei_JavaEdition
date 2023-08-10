@@ -26,7 +26,8 @@
             android:background="@color/layoutBackground"
             android:layout_marginBottom="5dp"
             android:padding="5dp"
-            android:layout_height="300dp"/>
+            android:layout_height="0dp"
+            android:visibility="invisible"/>
 
         <ScrollView
             android:layout_width="match_parent"

@@ -19,12 +19,12 @@
     <color name="purple">#7F00FF</color>
     <color name="gray">#54000000</color>
 
-    <color name="faltaGrafico">#FF5F5F</color>
+    <color name="faltaGrafico">#FF3434</color>
     <color name="restanteGrafico">#9CBAFF</color>
 
     <!-- GRADUAÇÃO DE CORES HOME-->
-    <color name="desistencia">#FF0000</color> <!--30%+ faltas-->
-    <color name="emergencial">#FF3333</color> <!--30% faltas-->
+    <color name="desistencia">#ACACAC</color> <!--30%+ faltas-->
+    <color name="emergencial">#FF3434</color> <!--30% faltas-->
     <color name="perigo">#FF5E00</color> <!--24% faltas-->
     <color name="cuidado">#FFFF66</color> <!--18% faltas-->
     <color name="tranquilo">#99FF33</color> <!--12% faltas-->

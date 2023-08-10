@@ -1,5 +1,7 @@
 package com.example.faltei;
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -11,7 +13,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +33,7 @@ public class FragmentHome extends Fragment {
 
     private FragmentHomeBinding binding;
     private PieChart graficoHome;
+    private LinearLayout bannerSelecionado;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,11 +41,8 @@ public class FragmentHome extends Fragment {
         graficoHome = binding.chartHome;
         criaBannersDisciplinas();
         criaGraficoGeral();
+
         return binding.getRoot();
-    }
-
-    public void iniciaGrafico(){
-
     }
 
     public ArrayList<Disciplina> ordenaListaDisciplinas(){
@@ -101,29 +105,95 @@ public class FragmentHome extends Fragment {
             Log.d("HomeActivity", "BANNER DA DISCIPLINA: " + disciplinasOrdenadas.get(i).getNomeDisciplina());
             String nomeDisciplina = disciplinasOrdenadas.get(i).getNomeDisciplina();
             Double percentualFaltas = disciplinasOrdenadas.get(i).getPercentualFaltas();
+            int limiteFaltas = disciplinasOrdenadas.get(i).getQuantidadeLimiteFaltas();
+
             Log.d("HomeActivity", "---Percentual de faltas: " + percentualFaltas);
             View bannerHome = getLayoutInflater().inflate(R.layout.banner_home, null, false);
             CardView cardViewBanner = bannerHome.findViewById(R.id.cardView_bannerHome);
-            if(percentualFaltas <= 0.06)
+            ImageView src = bannerHome.findViewById(R.id.imageView_situacao);
+
+            String texto;
+            if(percentualFaltas == 0.0){
+                texto = getString(R.string.MensagemSemFalta);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.otimo));
-            else if(percentualFaltas <= 0.12)
+                src.setImageResource(R.drawable.otimo);
+            }
+            else if(percentualFaltas <= 0.06){
+                texto = getString(R.string.MensagemTranquilo);
+                cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.otimo));
+                src.setImageResource(R.drawable.otimo);
+            }
+            else if(percentualFaltas <= 0.12) {
+                texto = getString(R.string.MensagemOk);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.tranquilo));
-            else if (percentualFaltas <= 0.18)
+                src.setImageResource(R.drawable.tranquilo);
+            }
+            else if (percentualFaltas <= 0.18) {
+                texto = getString(R.string.MensagemCuidado);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.cuidado));
-            else if (percentualFaltas <= 0.24)
+                src.setImageResource(R.drawable.ok);
+            }
+            else if (percentualFaltas <= 0.24) {
+                texto = getString(R.string.MensagemPerigo);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.perigo));
-            else if (percentualFaltas <= 0.3)
+                src.setImageResource(R.drawable.cuidado);
+            }
+            else if (percentualFaltas <= 0.3) {
+                texto = getString(R.string.MensagemEmergente);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.emergencial));
-            else
+                src.setImageResource(R.drawable.emergente);
+            }
+            else {
+                texto = getString(R.string.MensagemReprovado);
                 cardViewBanner.setCardBackgroundColor(getResources().getColor(R.color.desistencia));
+                src.setImageResource(R.drawable.skull);
+                cardViewBanner.setAlpha(0.3f);
+            }
 
             TextView txtView_nomeDisciplinaBanner = bannerHome.findViewById(R.id.txtView_nomeDisciplina_bannerHome);
             txtView_nomeDisciplinaBanner.setText(nomeDisciplina);
 
-            PieChart chart_disciplinaBanner = (PieChart) bannerHome.findViewById(R.id.chartDisciplina_bannerHome);
+            TextView txtView_percetual = bannerHome.findViewById(R.id.txtView_percentual);
+            txtView_percetual.setText(String.format("%.1f",percentualFaltas*100) + "%");
 
+            TextView txtView_infoDisciplina = bannerHome.findViewById(R.id.txtView_infoDisciplina_home);
+            txtView_infoDisciplina.setText(trocaXporNumero(texto,limiteFaltas));
+
+            PieChart chart_disciplinaBanner = (PieChart) bannerHome.findViewById(R.id.chart_disciplina_home);
             disciplinasOrdenadas.get(i).iniciaGraficoFaltas(chart_disciplinaBanner, getResources().getColor(R.color.faltaGrafico));
 
+            LinearLayout layout_info = bannerHome.findViewById(R.id.layout_info_home);
+
+            AnimatorSet setAnim = new AnimatorSet();
+            setAnim.setInterpolator(new AccelerateDecelerateInterpolator());
+            ValueAnimator anim = ValueAnimator.ofInt(0,250).setDuration(200);
+
+            anim.addUpdateListener(animation->{
+                int value = (int) animation.getAnimatedValue();
+                bannerSelecionado.getLayoutParams().height = value;
+                bannerSelecionado.requestLayout();
+                Log.d("HomeActivity", "HEIGHT = " + bannerSelecionado.getHeight());
+            });
+
+            setAnim.play(anim);
+            Log.d("HomeActivity", "HEIGHT: " + layout_info.getHeight());
+            LinearLayout layout_card = bannerHome.findViewById(R.id.layout_internoCardView);
+            layout_card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bannerSelecionado = layout_info;
+                    Log.d("HomeActivity", "BANNER SELECIONADO: " + bannerSelecionado.toString());
+                    if(layout_info.getHeight() == 0){
+                        Log.d("HomeActivity", "HEIGHT INICIAL: " + layout_info.getHeight());
+                        anim.setIntValues(0,250);
+                    }
+                    else{
+                        Log.d("HomeActivity", "HEIGHT INICIAL: " + layout_info.getHeight());
+                        anim.setIntValues(250,0);
+                    }
+                    setAnim.start();
+                }
+            });
             layout_listaDisciplinas.addView(bannerHome);
         }
     }
@@ -193,5 +263,11 @@ public class FragmentHome extends Fragment {
         txtView.setPadding(10,10,10,10);
 
         layout_listaDisciplinas.addView(txtView);
+    }
+
+    public String trocaXporNumero(String mensagem, int numero){
+        String texto;
+        texto = mensagem.replace("X", Integer.toString(numero));
+        return texto;
     }
 }

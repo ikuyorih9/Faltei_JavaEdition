@@ -192,6 +192,7 @@ public class FragmentMostrarFaltas extends Fragment {
                     Log.d("HomeActivity", "DATA SELECIONADA PARA APAGAR: " + data.toString());
                     disciplina.removerFalta(data);
                     datasSelecionadas.remove(0);
+                    ((HomeActivity)getActivity()).salvarDisciplinas();
                 }
                 criarGrafico();
                 configuraInfo();

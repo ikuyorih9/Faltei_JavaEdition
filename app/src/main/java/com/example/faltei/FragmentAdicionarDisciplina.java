@@ -232,6 +232,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
                 disciplina.setQuantidadeAulas(qtdAulas);
 
+                disciplina.setCorEscolhida(corEscolhida);
                 if(disciplina.getCorEscolhida() == -1){
                     Snackbar.make(view, "Escolha uma cor para a disciplina.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
