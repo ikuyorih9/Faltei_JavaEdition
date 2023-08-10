@@ -65,7 +65,7 @@ public class FragmentDisciplina extends Fragment {
     protected void criaBannerDisciplina(@NonNull Disciplina disciplina){
         String nomeDisciplina = disciplina.getNomeDisciplina();
         String nomeProfessor = disciplina.getNomeProfessor();
-        int qtdAulas = disciplina.getQuantidadeAulas();
+        int qtdCreditos = disciplina.getQuantidadeCreditos();
         int corEscolhida = disciplina.getCorEscolhida();
 
         LinearLayout suporte = (LinearLayout) getView().findViewById(R.id.suporte_LinLay);
@@ -99,7 +99,7 @@ public class FragmentDisciplina extends Fragment {
         txtView_professor.setText("Prof: " + nomeProfessor);
 
         TextView txtView_aulas = layout_prof_aula.findViewById(R.id.txtView_qtdAulas);
-        String qtdAulasText = "Aulas: " + qtdAulas;
+        String qtdAulasText = "Créditos: " + qtdCreditos;
         txtView_aulas.setText(qtdAulasText);
 
         suporte.addView(banner);

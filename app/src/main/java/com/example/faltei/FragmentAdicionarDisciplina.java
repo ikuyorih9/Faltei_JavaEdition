@@ -42,7 +42,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
     private Button bApagar;
     private EditText etNomeDisciplina;
     private EditText etProfessor;
-    private EditText etQtdAulas;
+    private EditText etQtdCreditos;
     private ArrayList <ImageView> cores;
     private LinearLayout amostraCor;
     private LinearLayout botoesAlternativos;
@@ -62,7 +62,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
 
         etNomeDisciplina = binding.editTextNomeDisciplina;
         etProfessor = binding.editTextProfessor;
-        etQtdAulas = binding.editTextQtdAulas;
+        etQtdCreditos = binding.editTextQtdAulas;
 
         amostraCor = binding.layAmostraCor;
         botoesAlternativos = binding.layoutBotoesAlternativos;
@@ -73,7 +73,7 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 Disciplina disciplinaRecebida = ((Disciplina) result.getSerializable("bundleBannerDisciplina"));
                 etNomeDisciplina.setText(disciplinaRecebida.getNomeDisciplina());
                 etProfessor.setText(disciplinaRecebida.getNomeProfessor());
-                etQtdAulas.setText("" + disciplinaRecebida.getQuantidadeAulas());
+                etQtdCreditos.setText("" + disciplinaRecebida.getQuantidadeCreditos());
 
                 corEscolhida = disciplinaRecebida.getCorEscolhida();
                 amostraCor.setBackgroundColor(corEscolhida);
@@ -131,15 +131,16 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
 
-                Log.d("HomeActivity", "QUANTIDADE AULAS: " + etQtdAulas.getText() + etQtdAulas.getText());
+                Log.d("HomeActivity", "QUANTIDADE AULAS: " + etQtdCreditos.getText() + etQtdCreditos.getText());
 
-                if(etQtdAulas.getText().toString().isEmpty()
-                        || Integer.parseInt(etQtdAulas.getText().toString()) <= 0){
+                if(etQtdCreditos.getText().toString().isEmpty()
+                        || Integer.parseInt(etQtdCreditos.getText().toString()) <= 0){
                     Snackbar.make(view, "Insira uma quantidade de aulas válida.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
-                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
-                disciplina.setQuantidadeAulas(qtdAulas);
+                int qtdCreditos = Integer.parseInt(etQtdCreditos.getText().toString());
+                disciplina.setQuantidadeCreditos(qtdCreditos);
+                disciplina.calculaQuantidadeAulas();
 
                 disciplina.setCorEscolhida(corEscolhida);
                 if(disciplina.getCorEscolhida() == -1){
@@ -224,13 +225,14 @@ public class FragmentAdicionarDisciplina extends Fragment {
                 }
                 disciplina.setNomeProfessor(nomeProfessor);
 
-                if(etQtdAulas.getText().toString().isEmpty()
-                        || Integer.parseInt(etQtdAulas.getText().toString()) <= 0){
+                if(etQtdCreditos.getText().toString().isEmpty()
+                        || Integer.parseInt(etQtdCreditos.getText().toString()) <= 0){
                     Snackbar.make(view, "Insira uma quantidade de aulas válida.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
-                int qtdAulas = Integer.parseInt(etQtdAulas.getText().toString());
-                disciplina.setQuantidadeAulas(qtdAulas);
+                int qtdCreditos = Integer.parseInt(etQtdCreditos.getText().toString());
+                disciplina.setQuantidadeCreditos(qtdCreditos);
+                disciplina.calculaQuantidadeAulas();
 
                 disciplina.setCorEscolhida(corEscolhida);
                 if(disciplina.getCorEscolhida() == -1){

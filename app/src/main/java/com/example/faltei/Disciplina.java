@@ -27,11 +27,12 @@ public class Disciplina implements Serializable {
     private int quantidadeCreditos;
     private ArrayList <Date> faltas;
 
-    public Disciplina(String nomeDisciplina, String nomeProfessor, int corEscolhida, int quantidadeAulas){
+    public Disciplina(String nomeDisciplina, String nomeProfessor, int corEscolhida, int quantidadeCreditos){
         this.nomeDisciplina = nomeDisciplina;
         this.nomeProfessor = nomeProfessor;
         this.corEscolhida = corEscolhida;
-        this.quantidadeAulas = quantidadeAulas;
+        this.quantidadeCreditos = quantidadeCreditos;
+        this.quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
         faltas = new ArrayList<>();
         quantidadeLimiteFaltas = quantidadeAulas - ((int)((HomeActivity.mediaFaltas) * quantidadeAulas)+1);
     }
@@ -54,7 +55,9 @@ public class Disciplina implements Serializable {
     public void setQuantidadeAulas(int quantidadeAulas){
         this.quantidadeAulas = quantidadeAulas;
     }
-
+    public void setQuantidadeCreditos(int quantidadeCreditos){
+        this.quantidadeCreditos = quantidadeCreditos;
+    }
     public void setLimiteFaltas(int quantidadeLimiteFaltas){
         this.quantidadeLimiteFaltas = quantidadeLimiteFaltas;
     }
@@ -150,7 +153,9 @@ public class Disciplina implements Serializable {
     public double getPercentualFaltas(){
         return ((double) faltas.size())/quantidadeAulas;
     }
-
+    public int getQuantidadeCreditos(){
+        return quantidadeCreditos;
+    }
     public boolean equalDisciplina(Disciplina disciplina){
         boolean eqNome = this.nomeDisciplina == disciplina.getNomeDisciplina();
         boolean eqProf = this.nomeProfessor == disciplina.getNomeProfessor();
@@ -188,5 +193,9 @@ public class Disciplina implements Serializable {
         Log.d("HomeActivity", "---Cor da disciplina: " + corEscolhida);
         //Log.d("HomeActivity", "---Faltas: " + getPercentualFaltas());
         mostraFaltas();
+    }
+
+    public void calculaQuantidadeAulas(){
+        quantidadeAulas = this.quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
     }
 }

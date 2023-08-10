@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static double mediaFaltas = 0.7;
 
+    public static int horasPorCredito = 15;
     public static ArrayList<Disciplina> disciplinasSalvas;
 
     @Override
@@ -97,13 +98,13 @@ public class HomeActivity extends AppCompatActivity {
             String nomeDisciplina = disciplina.getNomeDisciplina();
             String nomeProfessor = disciplina.getNomeProfessor();
             int cor = disciplina.getCorEscolhida();
-            int qtdAulas = disciplina.getQuantidadeAulas();
+            int qtdCreditos = disciplina.getQuantidadeCreditos();
             int qtdFaltas = disciplina.getQuantidadeFaltas();
 
             editor.putString(getString(R.string.nomeDisciplinaKey) + i, nomeDisciplina);
             editor.putString(getString(R.string.nomeProfessorKey) + i, nomeProfessor);
             editor.putInt(getString(R.string.corDisciplinaKey) + i, cor);
-            editor.putInt(getString(R.string.qtdAulasKey) + i, qtdAulas);
+            editor.putInt(getString(R.string.qtdAulasKey) + i, qtdCreditos);
 
             editor.putInt(getString(R.string.qtdFaltasKey) + i, qtdFaltas);
             for(int j = 0; j < qtdFaltas; j++){
@@ -139,9 +140,9 @@ public class HomeActivity extends AppCompatActivity {
             String nomeDisciplina = sharedPref.getString(getString(R.string.nomeDisciplinaKey) + i, "Disciplina -");
             String nomeProfessor = sharedPref.getString(getString(R.string.nomeProfessorKey) + i, "Professor -");
             int cor = sharedPref.getInt(getString(R.string.corDisciplinaKey) + i, -1);
-            int qtdAulas = sharedPref.getInt(getString(R.string.qtdAulasKey) + i, -1);
+            int qtdCreditos = sharedPref.getInt(getString(R.string.qtdAulasKey) + i, -1);
 
-            Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, qtdAulas);
+            Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, qtdCreditos);
 
             int qtdFaltas = sharedPref.getInt(getString(R.string.qtdFaltasKey) + i, 0);
             for(int j = 0; j < qtdFaltas; j++){
