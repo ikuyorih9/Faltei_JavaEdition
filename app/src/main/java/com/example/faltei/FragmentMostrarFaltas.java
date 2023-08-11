@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,12 +31,14 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class FragmentMostrarFaltas extends Fragment {
 
     private FragmentMostrarFaltasBinding binding;
     private Disciplina disciplina;
+    private Button button_faltei;
     private PieChart geralFaltas;
     private PieChart graficoDisciplina;
     private TextView txtView_nomeDisciplina;
@@ -112,6 +115,30 @@ public class FragmentMostrarFaltas extends Fragment {
                         .findFragmentById(R.id.nav_contentMain);
                 NavController navControl= navHostFragment.getNavController();
                 navControl.navigate(R.id.action_addFaltas, idBundle);
+            }
+        });
+
+        binding.buttonFaltei.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(disciplina.getQuantidadeFaltas() >= disciplina.getQuantidadeAulas()){
+                    Snackbar.make(view, "Você já atingiu o máximo de faltas possível!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    return;
+                }
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY,0);
+                calendar.set(Calendar.MINUTE,0);
+                calendar.set(Calendar.SECOND,0);
+
+                disciplina.adicionarFalta(calendar.getTime());
+                Log.d("HomeActivity", "Botao Faltei!: " + disciplina.getFaltas().contains(calendar.getTime()));
+
+
+                ((HomeActivity)getActivity()).salvarDisciplinas();
+                criarGrafico();
+                configuraInfo();
+                configuraLista();
             }
         });
 
@@ -192,6 +219,10 @@ public class FragmentMostrarFaltas extends Fragment {
                     Log.d("HomeActivity", "DATA SELECIONADA PARA APAGAR: " + data.toString());
                     disciplina.removerFalta(data);
                     datasSelecionadas.remove(0);
+                    for(int j = 0; j < disciplina.getFaltas().size(); j++) {
+                        Log.d("HomeActivity", "Disciplinas Salvas: ");
+                        Log.d("HomeActivity", "\t" + j + " - " + disciplina.getFaltas().get(j).toString());
+                    }
                     ((HomeActivity)getActivity()).salvarDisciplinas();
                 }
                 criarGrafico();

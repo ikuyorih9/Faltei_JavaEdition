@@ -120,6 +120,10 @@ public class Disciplina implements Serializable {
         quantidadeLimiteFaltas --;
     }
     public void removerFalta(Date data){
+        Log.d("HomeActivity", "removerFalta: " + faltas.contains(data));
+        for(int i = 0; i < faltas.size(); i++){
+            Log.d("HomeActvity", "-----FALTAAAA: "+faltas.get(i).toString());
+        }
         faltas.remove(data);
         quantidadeLimiteFaltas++;
     }
