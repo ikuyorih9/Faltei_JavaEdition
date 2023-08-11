@@ -1,5 +1,7 @@
 package com.example.faltei;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
@@ -175,6 +177,20 @@ public class FragmentHome extends Fragment {
                 Log.d("HomeActivity", "HEIGHT = " + bannerSelecionado.getHeight());
             });
 
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    Log.d("HomeActivity", "HEIGHT FINAL: " + bannerSelecionado.getHeight());
+                    if(bannerSelecionado.getHeight() >= 5) {
+                        ViewGroup.LayoutParams layoutParams = bannerSelecionado.getLayoutParams();
+                        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    }
+                    else
+                        bannerSelecionado.getLayoutParams().height = 0;
+                }
+            });
+
             setAnim.play(anim);
             Log.d("HomeActivity", "HEIGHT: " + layout_info.getHeight());
             LinearLayout layout_card = bannerHome.findViewById(R.id.layout_internoCardView);
@@ -182,6 +198,7 @@ public class FragmentHome extends Fragment {
                 @Override
                 public void onClick(View view) {
                     bannerSelecionado = layout_info;
+                    Log.d("HomeActivity", "TAMANHO CERTO: " + bannerSelecionado.getMeasuredHeight());
                     Log.d("HomeActivity", "BANNER SELECIONADO: " + bannerSelecionado.toString());
                     if(layout_info.getHeight() == 0){
                         Log.d("HomeActivity", "HEIGHT INICIAL: " + layout_info.getHeight());

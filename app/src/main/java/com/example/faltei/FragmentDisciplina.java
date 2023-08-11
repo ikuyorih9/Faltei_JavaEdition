@@ -37,6 +37,7 @@ public class FragmentDisciplina extends Fragment {
 
     private FragmentDisciplinaBinding binding;
     private LinearLayout suporteLinLay;
+    ArrayList<Integer> coresOrdem;
 
     @Override
     public void onResume() {
@@ -59,6 +60,13 @@ public class FragmentDisciplina extends Fragment {
             }
         });
 
+        coresOrdem = new ArrayList<>();
+        coresOrdem.add(getResources().getColor(R.color.darkRed));
+        coresOrdem.add(getResources().getColor(R.color.orange));
+        coresOrdem.add(getResources().getColor(R.color.yellow));
+        coresOrdem.add(getResources().getColor(R.color.darkGreen));
+        coresOrdem.add(getResources().getColor(R.color.darkBlue));
+        coresOrdem.add(getResources().getColor(R.color.purple));
         return binding.getRoot();
     }
 
@@ -107,13 +115,29 @@ public class FragmentDisciplina extends Fragment {
     }
 
     private void displayBanners(){
-        if(HomeActivity.disciplinasSalvas != null)
-            for(int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++){
-                Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
+        if(HomeActivity.disciplinasSalvas != null || coresOrdem == null) {
+            ArrayList<Disciplina> disciplinasOrdenadasCor = organizaCorDisciplinas(coresOrdem);
+            for (int i = 0; i < disciplinasOrdenadasCor.size(); i++) {
+                Disciplina disciplina = disciplinasOrdenadasCor.get(i);
                 Log.d("HomeActivity", "DISCIPLINA " + i + ":");
                 disciplina.mostraDadosDisciplina();
                 criaBannerDisciplina(disciplina);
             }
+        }
+    }
+
+    private ArrayList<Disciplina> organizaCorDisciplinas(ArrayList<Integer> cores){
+        if(HomeActivity.disciplinasSalvas == null)
+            return null;
+        ArrayList<Disciplina> disciplinasOrdenadasCor = new ArrayList<>();
+        for(int j = 0; j < cores.size(); j++){
+            for(int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++){
+                Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
+                if(disciplina.getCorEscolhida() == cores.get(j))
+                    disciplinasOrdenadasCor.add(disciplina);
+            }
+        }
+        return disciplinasOrdenadasCor;
     }
 
     private void limpaBanners(){

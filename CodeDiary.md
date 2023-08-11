@@ -253,3 +253,13 @@ Ainda preciso adicionar:
 * Um ícone;
 
 * Ícones de navegação.
+
+## 10 de agosto de 2023: selecionar da Home, organização por cores e outras coisas:
+
+Há algum tempo não documento as mudanças, mas algumas coisas foram retiradas e outras adicionadas.
+
+Para começar, a Home mostra o gráfico de faltas apenas quando clica-se no banner da disciplinas. Há também pequenas imagens que indicam a situação da presença do aluno, além da indicação por cores (que também foram modificadas para uma melhor visualização).
+
+Depois, as disciplinas começaram a utilizar critério de "créditos-aula", em detrimento do número de aulas.
+
+Por fim, o local de adicionar faltas foi retirado do menu de faltas e adicionado no menu de mostrar faltas.

@@ -45,4 +45,7 @@
         "Não se preocupe, você ainda possui X faltas restantes!"
     </string> <!--6%-->
     <string name="MensagemSemFalta">"Ótimo! Você não possui faltas :)"</string>
+
+    <!--Informação de criação e direitos-->
+    <string name="infoCriador">Aplicação criada por Hugo Nakamura.</string>
 </resources>
