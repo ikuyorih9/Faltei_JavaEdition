@@ -57,6 +57,7 @@ public class Disciplina implements Serializable {
     }
     public void setQuantidadeCreditos(int quantidadeCreditos){
         this.quantidadeCreditos = quantidadeCreditos;
+        this.quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
     }
     public void setLimiteFaltas(int quantidadeLimiteFaltas){
         this.quantidadeLimiteFaltas = quantidadeLimiteFaltas;
@@ -136,6 +137,7 @@ public class Disciplina implements Serializable {
         return corEscolhida;
     }
     public int getQuantidadeAulas(){
+        calculaQuantidadeAulas();
         return quantidadeAulas;
     }
     public int getQuantidadeFaltas(){
@@ -196,6 +198,6 @@ public class Disciplina implements Serializable {
     }
 
     public void calculaQuantidadeAulas(){
-        quantidadeAulas = this.quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
+        quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
     }
 }

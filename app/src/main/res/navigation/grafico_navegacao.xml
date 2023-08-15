@@ -34,6 +34,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_config"
+        android:name="com.example.faltei.FragmentConfiguracoes"
+        android:label="Configurações"
+        tools:layout="@layout/fragment_configuracoes">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_addDisciplina"
         android:name="com.example.faltei.FragmentAdicionarDisciplina"
         android:label="Adicionar disciplina"
@@ -66,14 +73,4 @@
             android:id="@+id/action_addFaltas"
             app:destination="@id/nav_addFalta"/>
     </fragment>
-
-    <fragment
-        android:id="@+id/nav_config"
-        android:name="com.example.faltei.FragmentConfiguracoes"
-        android:label="Configurações"
-        tools:layout="@layout/fragment_configuracoes">
-
-    </fragment>
-
-
 </navigation>

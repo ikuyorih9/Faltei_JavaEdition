@@ -11,6 +11,8 @@
     <string name="qtdAulasKey">!qtdAulas</string>
     <string name="qtdDisciplinasKey">!quantidadeDisciplinas</string>
     <string name="qtdFaltasKey">!quantidadeFaltas</string>
+    <string name="limitePresencaKey">!limitePresenca</string>
+    <string name="horasPorCreditoKey">!horasPorCredito</string>
 
     <!-- TEXTOS PRONTOS-->
 

@@ -61,11 +61,17 @@ public class FragmentFaltas extends Fragment {
             return;
 
         LinearLayout layoutGeral = (LinearLayout) binding.layoutBannersFalta;
-        for(int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++){
-            Log.d("HomeActivity", "Disciplina: " + HomeActivity.disciplinasSalvas.get(i).getNomeDisciplina());
-            Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
-            View banner = criaBannerDisciplina(disciplina);
-            layoutGeral.addView(banner);
+        for(int j = 0; j < HomeActivity.ordemCores.size(); j++) {
+            Log.d("HomeActivity", "COR: " + HomeActivity.ordemCores.get(j));
+            for (int i = 0; i < HomeActivity.disciplinasSalvas.size(); i++) {
+
+                Disciplina disciplina = HomeActivity.disciplinasSalvas.get(i);
+                if(disciplina.getCorEscolhida() == HomeActivity.ordemCores.get(j)){
+                    Log.d("HomeActivity", "---Disciplina: " + HomeActivity.disciplinasSalvas.get(i).getNomeDisciplina());
+                    View banner = criaBannerDisciplina(disciplina);
+                    layoutGeral.addView(banner);
+                }
+            }
         }
     }
 

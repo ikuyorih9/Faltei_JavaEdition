@@ -48,36 +48,6 @@ public class FragmentMostrarFaltas extends Fragment {
     private ArrayList<Date> datasSelecionadas;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        /*
-        getParentFragmentManager().setFragmentResultListener("bundleFragment", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                int i = result.getInt("bundleBannerFalta",-1);
-                if(i == -1)
-                    Log.e("HomeActivity", "Erro ao receber disciplina em FragmentMostrarFaltas");
-                else
-                    disciplina = (Disciplina) HomeActivity.disciplinasSalvas.get(i);
-                txtView_nomeDisciplina.setText(disciplina.getNomeDisciplina());
-                criarGrafico();
-                configuraInfo();
-                configuraLista();
-            }
-        });
-
-        if(disciplina != null){
-            Log.d("HomeActivity", disciplina.toString());
-            criarGrafico();
-            configuraInfo();
-            configuraLista();
-        }
-        */
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -165,7 +135,7 @@ public class FragmentMostrarFaltas extends Fragment {
 
         Log.d("HomeActivity", "Número de aulas: " + numAulas);
         Log.d("HomeActivity", "Número de faltas: " + numFaltas);
-        Log.d("HomeActivity", "Número de faltas restantes: " + numFaltasRestantes);
+        Log.d("HomeActivity", "Número de faltas restantes ("+ (HomeActivity.mediaFaltas) + "): " + numFaltasRestantes);
 
         txtView_numAulas.setText(getString(R.string.numAulas) + numAulas);
         txtView_numFaltas.setText(getString(R.string.numFaltas) + numFaltas);

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_configuracoes"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_config"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/home"
     tools:context=".FragmentConfiguracoes">
 
     <ScrollView
@@ -14,6 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -24,7 +28,8 @@
                 android:gravity="center|left"
                 android:clickable="true"
                 android:textSize="@dimen/tamanhoTitulo"
-                android:text="Prioridade de cores."/>
+                android:textColor="@color/gray"
+                android:text="Prioridade de cores"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,35 +47,83 @@
                     android:clickable="true"
                     android:textSize="@dimen/tamanhoTitulo"
                     android:text="Limite de presença (%)"/>
+
                 <EditText
+                    android:id="@+id/editText_limitePresenca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:inputType="number"/>
+                    android:background="@color/layoutBackground"
+                    android:hint="ex: 70"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true" />
             </LinearLayout>
-            <TextView
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center|left"
-                android:clickable="true"
-                android:textSize="@dimen/tamanhoTitulo"
-                android:text="Resetar dados do aplicativo"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center|left"
+                    android:clickable="true"
+                    android:textSize="@dimen/tamanhoTitulo"
+                    android:text="Horas por crédito (h)"/>
 
-            <TextView
+                <EditText
+                    android:id="@+id/editText_horasPorCredito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:background="@color/layoutBackground"
+                    android:hint="ex: 15"
+                    android:inputType="number"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center|left"
-                android:clickable="true"
-                android:textSize="@dimen/tamanhoTitulo"
-                android:text="Versão"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center|left"
+                    android:clickable="true"
+                    android:textSize="@dimen/tamanhoTitulo"
+                    android:text="Versão"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center|right"
+                    android:clickable="true"
+                    android:textSize="@dimen/tamanhoTitulo"
+                    android:text="1.0"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_salvar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salvar mudanças"/>
         </LinearLayout>
+
     </ScrollView>
     <TextView
         android:layout_width="match_parent"

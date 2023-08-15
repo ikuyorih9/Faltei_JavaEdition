@@ -9,26 +9,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import com.example.faltei.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import java.text.DateFormat;
+
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
     public static double mediaFaltas = 0.7;
 
     public static int horasPorCredito = 15;
+
+    public static ArrayList <Integer> ordemCores = new ArrayList<>();
     public static ArrayList<Disciplina> disciplinasSalvas;
 
     @Override
@@ -50,9 +46,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Log.d("HomeActivity", "onCreate");
+        carregarConfiguracoes();
         carregarDisciplinas();
+        carregarCores();
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //Desativa o modo escuro.
+
         binding = ActivityHomeBinding.inflate(getLayoutInflater()); //Cria um objeto de vinculação.
         setContentView(binding.getRoot()); //Obtém a visualização e a ativa na tela.
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar)); //Configura a barra de ferramentas.
@@ -60,7 +59,10 @@ public class HomeActivity extends AppCompatActivity {
 
         DrawerLayout drawer = binding.drawerLayout; //Cria um layout Drawer, que permite a sobreposição do menu lateral.
         NavigationView navigationView = binding.navView; //Cria um menu de navegação padrão (menu lateral).
-        configuracaoToolbar = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_disciplinas, R.id.nav_faltas).setOpenableLayout(drawer).build();
+        configuracaoToolbar = new AppBarConfiguration.Builder(
+                R.id.nav_home,
+                R.id.nav_disciplinas,
+                R.id.nav_faltas).setOpenableLayout(drawer).build();
 
         //Gerencia a navegação do aplicativo.
         // Navigation flows and destinations are determined by the navigation graph owned by the controller
@@ -81,6 +83,40 @@ public class HomeActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, configuracaoToolbar) || super.onSupportNavigateUp();
     }
 
+    public void carregarCores(){
+        ordemCores.clear();
+        ordemCores.add(getResources().getColor(R.color.darkRed));
+        ordemCores.add(getResources().getColor(R.color.orange));
+        ordemCores.add(getResources().getColor(R.color.yellow));
+        ordemCores.add(getResources().getColor(R.color.darkGreen));
+        ordemCores.add(getResources().getColor(R.color.darkBlue));
+        ordemCores.add(getResources().getColor(R.color.purple));
+    }
+
+    public void carregarConfiguracoes(){
+        Log.d("HomeActivity", "Carregando configurações...");
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        float value = sharedPref.getFloat(getString(R.string.limitePresencaKey), 70.0f);
+        mediaFaltas = BigDecimal.valueOf(value).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        horasPorCredito = sharedPref.getInt(getString(R.string.horasPorCreditoKey), 15);
+
+        Log.d("HomeActivity", "Informações carregadas: ");
+        Log.d("HomeActivity", "--- Limite presença: " + mediaFaltas);
+        Log.d("HomeActivity", "--- Horas por crédito: " + horasPorCredito);
+    }
+    public void salvarConfiguracoes(){
+        Log.d("HomeActivity","Salvando configurações...");
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putFloat(getString(R.string.limitePresencaKey), (float) mediaFaltas);
+        editor.putInt(getString(R.string.horasPorCreditoKey), horasPorCredito);
+
+        editor.apply();
+        Log.d("HomeActivity","Informações salvas: ");
+        Log.d("HomeActivity", "---Presença: " + mediaFaltas);
+        Log.d("HomeActivity", "---Horas por crédito: " + horasPorCredito);
+    }
 
     public void salvarDisciplinas(){
         Log.d("HomeActivity", "Salvando disciplinas!");

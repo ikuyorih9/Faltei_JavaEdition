@@ -16,5 +16,9 @@
             android:id="@+id/nav_faltas"
             android:icon="@drawable/falta"
             android:title="Faltas" />
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/settings"
+            android:title="Configurações"/>
     </group>
 </menu>
