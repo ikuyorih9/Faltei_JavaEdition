@@ -22,6 +22,8 @@
     <color name="faltaGrafico">#FF3434</color>
     <color name="restanteGrafico">#9CBAFF</color>
 
+    <color name="padrao_float_button">#eaddff</color>
+
     <!-- GRADUAÇÃO DE CORES HOME-->
     <color name="desistencia">#ACACAC</color> <!--30%+ faltas-->
     <color name="emergencial">#FF3434</color> <!--30% faltas-->
