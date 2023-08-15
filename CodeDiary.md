@@ -258,8 +258,14 @@ Ainda preciso adicionar:
 
 Há algum tempo não documento as mudanças, mas algumas coisas foram retiradas e outras adicionadas.
 
-Para começar, a Home mostra o gráfico de faltas apenas quando clica-se no banner da disciplinas. Há também pequenas imagens que indicam a situação da presença do aluno, além da indicação por cores (que também foram modificadas para uma melhor visualização).
+Primeiramente, eu retirei os três pontos no canto da toolbar e adicionei as "Configurações" no menu lateral. Assim, a nova tela de configurações possui
 
-Depois, as disciplinas começaram a utilizar critério de "créditos-aula", em detrimento do número de aulas.
+* Percentual de presença limite para não reprovação;
+* Quantidade de horas por crédito;
+* Número da versão do aplicativo.
 
-Por fim, o local de adicionar faltas foi retirado do menu de faltas e adicionado no menu de mostrar faltas.
+Além disso, as disciplinas e as faltas registradas foram configuradas em ordem de cor. Isso devia ser configurado nas configurações, mas ainda não está disponível, portanto, a ordem de cores é padrão.
+
+A tela de adicionar faltas foi completamente criada. Todas as disciplinas criadas aparecem na tela de faltas e, para adicionar uma falta, você deve clicar na disciplina escolhida. A tela seguinte, então, apresenta todas as faltas e sua porcentagem diante do total de aulas da disciplina.
+
+Algumas mudanças pequenas também foram adicionadas, mas após tanto tempo, eu já não lembro quais foram. No geral, essa é provavelmente a última mudança no aplicativo para essa versão. Logo, o APK será disponibilizado.
