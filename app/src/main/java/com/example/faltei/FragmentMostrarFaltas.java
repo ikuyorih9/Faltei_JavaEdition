@@ -183,11 +183,17 @@ public class FragmentMostrarFaltas extends Fragment {
                     Snackbar.make(view, "Selecione um registro de falta!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
+
                 int qtdDatas = datasSelecionadas.size();
                 for(int i = 0; i < qtdDatas; i++){
                     Date data = datasSelecionadas.get(0);
                     Log.d("HomeActivity", "DATA SELECIONADA PARA APAGAR: " + data.toString());
-                    disciplina.removerFalta(data);
+
+                    int id = disciplina.idFaltaPorString(data.toString());
+                    if(id == -1)
+                        return;
+
+                    disciplina.removerFalta(id);
                     datasSelecionadas.remove(0);
                     for(int j = 0; j < disciplina.getFaltas().size(); j++) {
                         Log.d("HomeActivity", "Disciplinas Salvas: ");

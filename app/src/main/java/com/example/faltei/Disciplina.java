@@ -151,6 +151,7 @@ public class Disciplina implements Serializable {
         return faltas.get(i);
     }
     public int getQuantidadeLimiteFaltas(){
+        calculaLimiteFaltas();
         return quantidadeLimiteFaltas;
     }
     public ArrayList <Date> getFaltas(){
@@ -203,5 +204,18 @@ public class Disciplina implements Serializable {
 
     public void calculaQuantidadeAulas(){
         quantidadeAulas = (quantidadeCreditos*HomeActivity.horasPorCredito*60)/100;
+    }
+
+    public void calculaLimiteFaltas(){
+        calculaQuantidadeAulas();
+        quantidadeLimiteFaltas = quantidadeAulas - ((int)((HomeActivity.mediaFaltas) * quantidadeAulas)+1);
+    }
+
+    public int idFaltaPorString(String falta){
+        for(int i = 0; i < faltas.size(); i++){
+            if(faltas.get(i).toString().compareTo(falta) == 0)
+                return i;
+        }
+        return -1;
     }
 }

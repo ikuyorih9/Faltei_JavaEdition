@@ -108,6 +108,7 @@ public class FragmentHome extends Fragment {
             String nomeDisciplina = disciplinasOrdenadas.get(i).getNomeDisciplina();
             Double percentualFaltas = disciplinasOrdenadas.get(i).getPercentualFaltas();
             int limiteFaltas = disciplinasOrdenadas.get(i).getQuantidadeLimiteFaltas();
+            int faltasRestantes = limiteFaltas - disciplinasOrdenadas.get(i).getQuantidadeFaltas();
 
             Log.d("HomeActivity", "---Percentual de faltas: " + percentualFaltas);
             View bannerHome = getLayoutInflater().inflate(R.layout.banner_home, null, false);
@@ -159,7 +160,7 @@ public class FragmentHome extends Fragment {
             txtView_percetual.setText(String.format("%.1f",percentualFaltas*100) + "%");
 
             TextView txtView_infoDisciplina = bannerHome.findViewById(R.id.txtView_infoDisciplina_home);
-            txtView_infoDisciplina.setText(trocaXporNumero(texto,limiteFaltas));
+            txtView_infoDisciplina.setText(trocaXporNumero(texto,faltasRestantes));
 
             PieChart chart_disciplinaBanner = (PieChart) bannerHome.findViewById(R.id.chart_disciplina_home);
             disciplinasOrdenadas.get(i).iniciaGraficoFaltas(chart_disciplinaBanner, getResources().getColor(R.color.faltaGrafico));
