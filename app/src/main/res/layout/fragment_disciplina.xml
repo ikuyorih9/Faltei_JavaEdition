@@ -30,5 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/adicionar" />
+        app:srcCompat="@drawable/adicionar"
+        app:tint="@color/white"
+        android:backgroundTint="@color/primario" />
 </FrameLayout>
