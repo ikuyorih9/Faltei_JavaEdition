@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -173,7 +174,8 @@ public class FragmentHome extends Fragment {
 
             anim.addUpdateListener(animation->{
                 int value = (int) animation.getAnimatedValue();
-                bannerSelecionado.getLayoutParams().height = value;
+                float density = getResources().getDisplayMetrics().density;
+                bannerSelecionado.getLayoutParams().height = Math.round((float)value*density);
                 bannerSelecionado.requestLayout();
                 Log.d("HomeActivity", "HEIGHT = " + bannerSelecionado.getHeight());
             });
@@ -182,13 +184,13 @@ public class FragmentHome extends Fragment {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    Log.d("HomeActivity", "HEIGHT FINAL: " + bannerSelecionado.getHeight());
-                    if(bannerSelecionado.getHeight() >= 5) {
-                        ViewGroup.LayoutParams layoutParams = bannerSelecionado.getLayoutParams();
-                        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                    }
+                    float density = getResources().getDisplayMetrics().density;
+                    Log.d("HomeActivity", "Densidade: " + density);
+                    if(bannerSelecionado.getLayoutParams().height >= 10)
+                        bannerSelecionado.getLayoutParams().height = Math.round((float)100*density);
                     else
                         bannerSelecionado.getLayoutParams().height = 0;
+                    Log.d("HomeActivity", "HEIGHT FINAL: " + bannerSelecionado.getLayoutParams().height + "px " + bannerSelecionado.getHeight() + "dp");
                 }
             });
 
@@ -199,15 +201,11 @@ public class FragmentHome extends Fragment {
                 @Override
                 public void onClick(View view) {
                     bannerSelecionado = layout_info;
-                    Log.d("HomeActivity", "TAMANHO CERTO: " + bannerSelecionado.getMeasuredHeight());
-                    Log.d("HomeActivity", "BANNER SELECIONADO: " + bannerSelecionado.toString());
                     if(layout_info.getHeight() == 0){
-                        Log.d("HomeActivity", "HEIGHT INICIAL: " + layout_info.getHeight());
-                        anim.setIntValues(0,250);
+                        anim.setIntValues(0,100);
                     }
                     else{
-                        Log.d("HomeActivity", "HEIGHT INICIAL: " + layout_info.getHeight());
-                        anim.setIntValues(250,0);
+                        anim.setIntValues(100,0);
                     }
                     setAnim.start();
                 }

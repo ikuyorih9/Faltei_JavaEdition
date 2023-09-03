@@ -58,8 +58,6 @@ public class FragmentConfiguracoes extends Fragment{
                 HomeActivity.horasPorCredito = horasPorCredito;
                 ((HomeActivity) getActivity()).salvarConfiguracoes();
 
-                Log.e("HomeActivity", getContext().getFilesDir().list()[0]);
-
                 try{
                     FileOutputStream output = getContext().openFileOutput("sample.txt", Context.MODE_APPEND);
                     output.write("Olá eu sou um animal generico".getBytes());
