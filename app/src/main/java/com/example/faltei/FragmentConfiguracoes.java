@@ -1,5 +1,6 @@
 package com.example.faltei;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,6 +17,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.faltei.databinding.FragmentConfiguracoesBinding;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class FragmentConfiguracoes extends Fragment{
     FragmentConfiguracoesBinding binding;
@@ -52,6 +57,34 @@ public class FragmentConfiguracoes extends Fragment{
                 HomeActivity.mediaFaltas = frequencia;
                 HomeActivity.horasPorCredito = horasPorCredito;
                 ((HomeActivity) getActivity()).salvarConfiguracoes();
+
+                Log.e("HomeActivity", getContext().getFilesDir().list()[0]);
+
+                try{
+                    FileOutputStream output = getContext().openFileOutput("sample.txt", Context.MODE_APPEND);
+                    output.write("Olá eu sou um animal generico".getBytes());
+                    output.close();
+
+                    FileInputStream input = getContext().openFileInput("sample.txt");
+                    String s = "";
+                    int a = 0;
+                    do{
+                        a = input.read();
+                        if(a == -1)
+                            break;
+                        Log.e("HomeActivity", Character.toString((char)a));
+                        s += Character.toString((char)a);
+                    }
+                    while(a >= 0);
+                    Log.e("HomeActivity", s);
+                    input.close();
+
+                }
+                catch(IOException e){
+                    Log.e("HomeActivity", e.getMessage());
+                }
+
+
 
                 NavHostFragment navHostFragment = (NavHostFragment) getActivity()
                         .getSupportFragmentManager()
