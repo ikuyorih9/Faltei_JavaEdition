@@ -13,11 +13,13 @@ O registro de cabeçalho é formado por 13 bytes (0 à 12), contendo:
 
 ## O registro de dados.
 
-O registro de dados possui tamanho fixo em **128 bytes**, apresentando os campos variáveis (strings) e fixos (char e inteiros):
+O registro de dados possui tamanho fixo em **256 bytes**, apresentando os campos variáveis (strings) e fixos (char e inteiros):
+
 * **Byte de remoção (char);**
 * **Nome da disciplina (string);**
 * **Nome do professor (string);**
 * **Cor da disciplina (int);**
 * **Quantidade de créditos (int).** 
+* **Nome do arquivo de faltas (string).**
 
 Os campos variáveis apresentam **4 bytes** ao início para indicar o seu tamanho. Os espaços restantes ao fim do arquivo serão preenchidos com o número 7 (Bell).

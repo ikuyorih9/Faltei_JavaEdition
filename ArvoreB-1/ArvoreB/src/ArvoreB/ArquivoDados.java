@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 
 import javax.sound.sampled.SourceDataLine;
@@ -32,7 +33,7 @@ public class ArquivoDados{
 
 		public Cabecalho(){
 			status = '0';
-			proxRRN = TAM_PAG;
+			proxRRN = 0;
 			ultimoExcluidoRRN = -1;
 			quantidadeRegistros = 0;
 			atualizaCabecalhoArquivo();
@@ -72,14 +73,19 @@ public class ArquivoDados{
 	}
 
 	public class Registro{
-		public static final int TAM_REGISTRO = 128;
-		Disciplina disciplina;
+		public static final int TAM_REGISTRO = 256;
+		private int RRN;
+		private Disciplina disciplina;
+		private String nomeArquivoFaltas;
 
-		public Registro(Disciplina disciplina){
+		public Registro(Disciplina disciplina, int RRN){
 			this.disciplina = disciplina;
+			this.RRN = RRN;
+			nomeArquivoFaltas = "faltas_" + RRN + ".bin";
 		}
 
-		public void insereRegistroArquivo(int offset){
+		public void insereRegistroArquivo(){
+			int offset = ArquivoDados.calculaOffset(RRN);
 			int offsetInicio = offset;
 
 			char removido = '0';
@@ -109,11 +115,16 @@ public class ArquivoDados{
 
 			offset+=4;
 
-			int tam = offset - offsetInicio;
+			stream.write(nomeArquivoFaltas.length(), offset);
+			stream.write(nomeArquivoFaltas, offset + 4);
+			offset += nomeArquivoFaltas.length() + 4;
+
 			insereLixo(offset, offsetInicio + TAM_REGISTRO);
 		}
 
-		public void leRegistroArquivo(int offset){
+		public void leRegistroArquivo(){
+			int offset = ArquivoDados.calculaOffset(RRN);
+
 			char removido = stream.cRead(offset);
 			if(removido == '1')
 				return;
@@ -129,18 +140,31 @@ public class ArquivoDados{
 			offset += tamanho + 4;
 
 			int cor = stream.iRead(offset);
+			offset+=4;
 
-			int creditos = stream.iRead(offset+4);
+			int creditos = stream.iRead(offset);
+			offset+=4;
+			
+			tamanho = stream.iRead(offset);
+			nomeArquivoFaltas = stream.sRead(offset+4,tamanho);
+			offset += tamanho+4;
 
 			disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, creditos);
+			System.out.println("arquivo: " + nomeArquivoFaltas);
 		}
 	
+		public void atualizaArquivoFaltas(){
+			File faltas = new File(diretorio, nomeArquivoFaltas);
+
+		}
+
 		public void imprimeRegistro(){
 			System.out.println("Nome da disciplina: " + disciplina.getNomeDisciplina());
 			System.out.println("Nome do professor: " + disciplina.getNomeProfessor());
 			System.out.println("Cor da disciplina: " + disciplina.getCorEscolhida());
 			System.out.println("Quantidade de créditos: " + disciplina.getQuantidadeCreditos());
 		}
+	
 	}	
 
 	public void insereLixo(int from, int to){
@@ -149,5 +173,17 @@ public class ArquivoDados{
 		for(int i = from; i < to; i++)
 			stream.write(LIXO_CHAR, i);
 
+	}
+
+	public void insereDisciplina(Disciplina disciplina){
+		Registro registro = new Registro(disciplina, cabecalho.proxRRN);
+		registro.insereRegistroArquivo();
+		cabecalho.proxRRN++;
+		cabecalho.quantidadeRegistros++;
+		cabecalho.atualizaCabecalhoArquivo();
+	}
+
+	public static int calculaOffset(int RRN){
+		return ArquivoDados.TAM_PAG + (RRN * Registro.TAM_REGISTRO);
 	}
 }

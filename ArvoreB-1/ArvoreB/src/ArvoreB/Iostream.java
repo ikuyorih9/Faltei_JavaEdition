@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 public class Iostream {
@@ -21,6 +22,12 @@ public class Iostream {
         this.path = null;
         this.filename = filename;
         file = new File(filename);
+    }
+
+    public Iostream(File file){
+        this.file = file;
+        this.path = file.getAbsolutePath();
+        this.filename = file.getName();
     }
 
     //Escreve um inteiro no arquivo, na posição offset.
@@ -101,15 +108,23 @@ public class Iostream {
     }
 
     public char cRead(int offset){
-        return (char) read(offset);
+        return (char)read(offset);
     }
 
     public String sRead(int offset, int length){
         byte [] bytes = read(offset, length);
-        String s = "";
+        String s = null;
+        try{
+            s = new String(bytes, "UTF8");
+        }
+        catch(UnsupportedEncodingException e){
+            System.out.println(e.getMessage());
+        }
+        
+        /*
         for(int i = 0; i < length; i++){
             s  += (char) bytes[i];
-        }
+        } */
         return s;
     }
 }
