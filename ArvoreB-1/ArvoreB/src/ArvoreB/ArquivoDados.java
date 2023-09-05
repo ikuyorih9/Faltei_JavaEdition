@@ -1,17 +1,12 @@
 package ArvoreB;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import javax.sound.sampled.SourceDataLine;
 
 public class ArquivoDados{
 	public static final int TAM_PAG = 4096;
@@ -19,7 +14,6 @@ public class ArquivoDados{
 	private String nome;
 	private String diretorio;
 	public Cabecalho cabecalho;
-	public ArrayList <Registro> registros;
 	private Iostream stream;
 
 	public ArquivoDados(String diretorio, String nome){
@@ -27,7 +21,6 @@ public class ArquivoDados{
 		this.diretorio = diretorio;
 		stream = new Iostream(diretorio, nome);
 		cabecalho = new Cabecalho();	
-		registros = new ArrayList <Registro> ();	
 	}
 
 	public class Cabecalho{
@@ -47,15 +40,15 @@ public class ArquivoDados{
 
 		public void atualizaCabecalhoArquivo(){
 			Iostream stream = new Iostream(diretorio, nome);
-			arquivoConsistente(false, stream);
+			arquivoConsistente(false);
 			stream.write(proxRRN, 1);
 			stream.write(ultimoExcluidoRRN, 5);
 			stream.write(quantidadeRegistros, 9);
-			arquivoConsistente(true, stream);
+			arquivoConsistente(true);
 			insereLixo(TAM_DADOS_CAB, TAM_PAG);
 		}
 
-		private void arquivoConsistente(boolean consistencia, Iostream stream){
+		private void arquivoConsistente(boolean consistencia){
 			if(consistencia == false)
 				status = '0';
 			else
@@ -72,9 +65,11 @@ public class ArquivoDados{
 		}
 
 		public void imprimeCabecalho(){
-			System.out.println("Status: " + status);
-			System.out.println("proxRRN: " + proxRRN);
-			System.out.println("ultimoExcluidoRRN: " + ultimoExcluidoRRN);
+			Log.d("HomeActivity", "Status do arquivo: " + status);
+			Log.d("HomeActivity", "Próximo RRN disponível: " + proxRRN);
+			Log.d("HomeActivity", "RRN do último registro excluído: " + ultimoExcluidoRRN);
+			Log.d("HomeActivity", "Quantidade de registros: " + quantidadeRegistros);
+
 		}
 	}
 
@@ -93,6 +88,8 @@ public class ArquivoDados{
 		public void insereRegistroArquivo(){
 			int offset = ArquivoDados.calculaOffset(RRN);
 			int offsetInicio = offset;
+
+			cabecalho.arquivoConsistente(false);
 
 			char removido = '0';
 			stream.write((byte)removido, offset);
@@ -126,60 +123,31 @@ public class ArquivoDados{
 			offset += nomeArquivoFaltas.length() + 4;
 
 			insereLixo(offset, offsetInicio + TAM_REGISTRO);
+
+			cabecalho.arquivoConsistente(true);
 		}
 
-		public void leRegistroArquivo(){
-			int offset = ArquivoDados.calculaOffset(RRN);
-
-			char removido = stream.cRead(offset);
-			if(removido == '1')
-				return;
-			
-			offset++;
-
-			int tamanho = stream.iRead(offset);
-			String nomeDisciplina = stream.sRead(offset+4, tamanho);
-			offset += tamanho + 4;
-
-			tamanho = stream.iRead(offset);
-			String nomeProfessor = stream.sRead(offset+4, tamanho);
-			offset += tamanho + 4;
-
-			int cor = stream.iRead(offset);
-			offset+=4;
-
-			int creditos = stream.iRead(offset);
-			offset+=4;
-			
-			tamanho = stream.iRead(offset);
-			nomeArquivoFaltas = stream.sRead(offset+4,tamanho);
-			offset += tamanho+4;
-
-			disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, creditos);
-			System.out.println("arquivo: " + nomeArquivoFaltas);
-		}
-	
 		public void adicionaFaltas(Date data){
 			File faltas = new File(diretorio, nomeArquivoFaltas);
 			try{
 				RandomAccessFile streamFaltas = new RandomAccessFile(faltas, "rw");
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				System.out.println(streamFaltas.length());
 				streamFaltas.seek(streamFaltas.length());
 				streamFaltas.writeChars(dateFormat.format(data) + '\n');
 				streamFaltas.close();
 			}
 			catch(IOException e){
-				System.out.println(e.getMessage());
+				Log.e("HomeActivity", e.getLocalizedMessage());
 			}
 
 		}
 
 		public void imprimeRegistro(){
-			System.out.println("Nome da disciplina: " + disciplina.getNomeDisciplina());
-			System.out.println("Nome do professor: " + disciplina.getNomeProfessor());
-			System.out.println("Cor da disciplina: " + disciplina.getCorEscolhida());
-			System.out.println("Quantidade de créditos: " + disciplina.getQuantidadeCreditos());
+			Log.d("HomeActivity", "Nome da disciplina: " + disciplina.getNomeDisciplina());
+			Log.d("HomeActivity", "Nome do professor: " + disciplina.getNomeProfessor());
+			Log.d("HomeActivity", "Cor da disciplina: " + disciplina.getCorEscolhida());
+			Log.d("HomeActivity", "Quantidade de créditos: " + disciplina.getQuantidadeCreditos());
+			Log.d("HomeActivity", "Nome do arquivo de faltas " + nomeArquivoFaltas);
 		}
 	
 	}	
@@ -193,12 +161,75 @@ public class ArquivoDados{
 	}
 
 	public void insereDisciplina(Disciplina disciplina){
-		Registro registro = new Registro(disciplina, cabecalho.proxRRN);
+		int RRN;
+		if(cabecalho.ultimoExcluidoRRN == -1)
+			RRN = cabecalho.proxRRN;
+		else{
+			RRN = cabecalho.ultimoExcluidoRRN;
+			int offset = calculaOffset(RRN) + 1;
+			cabecalho.ultimoExcluidoRRN = stream.iRead(offset);
+		}
+
+		Registro registro = new Registro(disciplina, RRN);
 		registro.insereRegistroArquivo();
 		cabecalho.proxRRN++;
 		cabecalho.quantidadeRegistros++;
 		cabecalho.atualizaCabecalhoArquivo();
-		registros.add(registro);
+	}
+
+	public Registro recuperaRegistro(int RRN){
+		int offset = ArquivoDados.calculaOffset(RRN);
+
+		char removido = stream.cRead(offset);
+		if(removido == '1'){
+			Log.d("HomeActivity", "Registro de RRN " + RRN + " já estava removido. Não foi possível recuperá-lo.");
+			return null;
+		}
+		
+		offset++;
+
+		int tamanho = stream.iRead(offset);
+		String nomeDisciplina = stream.sRead(offset+4, tamanho);
+		offset += tamanho + 4;
+
+		tamanho = stream.iRead(offset);
+		String nomeProfessor = stream.sRead(offset+4, tamanho);
+		offset += tamanho + 4;
+
+		int cor = stream.iRead(offset);
+		offset+=4;
+
+		int creditos = stream.iRead(offset);
+		offset+=4;
+		
+		tamanho = stream.iRead(offset);
+		String nomeArquivoFaltas = stream.sRead(offset+4,tamanho);
+		offset += tamanho+4;
+
+		Disciplina disciplina = new Disciplina(nomeDisciplina, nomeProfessor, cor, creditos);
+		return new Registro(disciplina, RRN);
+	}
+
+	public void excluiRegistro(int RRN){
+		int offset = calculaOffset(RRN);
+		char removido = stream.cRead(offset);
+		if(removido == '1'){
+			Log.d("HomeActivity", "Registro já está removido!");
+			return;
+		}
+
+		cabecalho.arquivoConsistente(false);
+
+		stream.write((byte)'1', offset);
+		offset++;
+		
+		int ultimoExcluido = cabecalho.ultimoExcluidoRRN;
+		stream.write(ultimoExcluido, offset);
+		cabecalho.ultimoExcluidoRRN = RRN;
+		cabecalho.quantidadeRegistros--;
+
+		cabecalho.arquivoConsistente(false);
+		cabecalho.atualizaCabecalhoArquivo();
 	}
 
 	public static int calculaOffset(int RRN){

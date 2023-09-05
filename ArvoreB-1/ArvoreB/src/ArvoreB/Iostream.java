@@ -7,10 +7,13 @@ import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
+
 public class Iostream {
+    private final String CODIFICACAO = "ISO-8859-1";
     private String filename;
     private String path;
     private File file;
+    
     
     public Iostream(String path, String filename){
         this.path = path;
@@ -115,16 +118,11 @@ public class Iostream {
         byte [] bytes = read(offset, length);
         String s = null;
         try{
-            s = new String(bytes, "UTF8");
+            s = new String(bytes, CODIFICACAO);
         }
         catch(UnsupportedEncodingException e){
             System.out.println(e.getMessage());
         }
-        
-        /*
-        for(int i = 0; i < length; i++){
-            s  += (char) bytes[i];
-        } */
         return s;
     }
 }
