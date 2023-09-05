@@ -6,22 +6,28 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.sound.sampled.SourceDataLine;
 
 public class ArquivoDados{
 	public static final int TAM_PAG = 4096;
 	public static final byte LIXO_CHAR = 7;
-	String nome;
-	String diretorio;
-	Cabecalho cabecalho;
-	Iostream stream;
+	private String nome;
+	private String diretorio;
+	public Cabecalho cabecalho;
+	public ArrayList <Registro> registros;
+	private Iostream stream;
 
 	public ArquivoDados(String diretorio, String nome){
 		this.nome = nome;
 		this.diretorio = diretorio;
 		stream = new Iostream(diretorio, nome);
-		cabecalho = new Cabecalho();		
+		cabecalho = new Cabecalho();	
+		registros = new ArrayList <Registro> ();	
 	}
 
 	public class Cabecalho{
@@ -81,7 +87,7 @@ public class ArquivoDados{
 		public Registro(Disciplina disciplina, int RRN){
 			this.disciplina = disciplina;
 			this.RRN = RRN;
-			nomeArquivoFaltas = "faltas_" + RRN + ".bin";
+			nomeArquivoFaltas = "faltas_" + RRN + ".txt";
 		}
 
 		public void insereRegistroArquivo(){
@@ -153,8 +159,19 @@ public class ArquivoDados{
 			System.out.println("arquivo: " + nomeArquivoFaltas);
 		}
 	
-		public void atualizaArquivoFaltas(){
+		public void adicionaFaltas(Date data){
 			File faltas = new File(diretorio, nomeArquivoFaltas);
+			try{
+				RandomAccessFile streamFaltas = new RandomAccessFile(faltas, "rw");
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				System.out.println(streamFaltas.length());
+				streamFaltas.seek(streamFaltas.length());
+				streamFaltas.writeChars(dateFormat.format(data) + '\n');
+				streamFaltas.close();
+			}
+			catch(IOException e){
+				System.out.println(e.getMessage());
+			}
 
 		}
 
@@ -181,6 +198,7 @@ public class ArquivoDados{
 		cabecalho.proxRRN++;
 		cabecalho.quantidadeRegistros++;
 		cabecalho.atualizaCabecalhoArquivo();
+		registros.add(registro);
 	}
 
 	public static int calculaOffset(int RRN){

@@ -22,4 +22,4 @@ O registro de dados possui tamanho fixo em **256 bytes**, apresentando os campos
 * **Quantidade de créditos (int).** 
 * **Nome do arquivo de faltas (string).**
 
-Os campos variáveis apresentam **4 bytes** ao início para indicar o seu tamanho. Os espaços restantes ao fim do arquivo serão preenchidos com o número 7 (Bell).
+Os campos variáveis apresentam **4 bytes** ao início para indicar o seu tamanho. Os espaços restantes ao fim do arquivo serão preenchidos com o número 7 (Bell). O nome do arquivo de faltas é criado a partir do RRN do registro, visto que ele é único no arquivo. Quando um arquivo é marcado como removido ('1'), os próximos 4 bytes indicam o topo da subpilha de registros apagados; caso não haja, é marcado com '-1'.

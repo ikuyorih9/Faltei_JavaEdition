@@ -1,5 +1,8 @@
 package ArvoreB;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import ArvoreB.ArquivoDados.Cabecalho;
 import ArvoreB.ArquivoDados.Registro;
 
@@ -15,6 +18,9 @@ public class MainArvore{
 
 		arq.insereDisciplina(disciplina);
 		arq.insereDisciplina(simoes);
+		arq.registros.get(0).adicionaFaltas(new GregorianCalendar(2023, 9, 4).getTime());
+
+		
 
   	}
 }
