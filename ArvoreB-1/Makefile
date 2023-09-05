@@ -1,6 +1,8 @@
 SRC := ArvoreB/src/ArvoreB
 CLASSES := ArvoreB/classes
 
+all: compile run
+
 compile:
 	javac -d $(CLASSES) $(SRC)/MainArvore.java $(SRC)/ArquivoDados.java $(SRC)/Disciplina.java $(SRC)/Iostream.java
 run:

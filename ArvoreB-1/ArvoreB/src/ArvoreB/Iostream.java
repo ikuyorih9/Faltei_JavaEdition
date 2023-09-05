@@ -115,7 +115,7 @@ public class Iostream {
         byte [] bytes = read(offset, length);
         String s = null;
         try{
-            s = new String(bytes, "UTF8");
+            s = new String(bytes, "ISO-8859-1");
         }
         catch(UnsupportedEncodingException e){
             System.out.println(e.getMessage());
