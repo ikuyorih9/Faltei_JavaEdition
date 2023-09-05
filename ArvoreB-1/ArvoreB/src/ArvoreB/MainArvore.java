@@ -1,11 +1,8 @@
 package ArvoreB;
 
-import ArvoreB.ArquivoDados.Cabecalho;
-import ArvoreB.ArquivoDados.Registro;
-
 public class MainArvore{
 	public static double mediaFaltas = 0.7;
-  public static int horasPorCredito = 15;
+  	public static int horasPorCredito = 15;
 	
 	public static void main(String[] args) {
 		ArquivoDados arq = new ArquivoDados(null, "teste.bin");
