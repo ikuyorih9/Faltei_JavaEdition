@@ -18,9 +18,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.faltei.databinding.FragmentConfiguracoesBinding;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class FragmentConfiguracoes extends Fragment{
     FragmentConfiguracoesBinding binding;
@@ -59,11 +61,14 @@ public class FragmentConfiguracoes extends Fragment{
                 ((HomeActivity) getActivity()).salvarConfiguracoes();
 
                 try{
-                    FileOutputStream output = getContext().openFileOutput("sample.txt", Context.MODE_APPEND);
+                    File arquivo = new File(getContext().getExternalFilesDir(null), "sample2.txt");
+
+                    RandomAccessFile output = new RandomAccessFile(arquivo,"rw");
                     output.write("Olá eu sou um animal generico".getBytes());
                     output.close();
 
-                    FileInputStream input = getContext().openFileInput("sample.txt");
+                    RandomAccessFile input = new RandomAccessFile(arquivo, "r");
+
                     String s = "";
                     int a = 0;
                     do{
